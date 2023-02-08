@@ -20,11 +20,31 @@ const App = () => {
   return (
     <NavigationContainer>
       <usersStack.Navigator initialRouteName="Splash">
-        <usersStack.Screen name="Splash" component={SplashScreen} />
-        <usersStack.Screen name="AuthCode" component={AuthCodeScreen} />
-        <usersStack.Screen name="Email" component={EmailScreen} />
-        <usersStack.Screen name="UserInfo" component={UserInfoScreen} />
-        <usersStack.Screen name="Login" component={LoginScreen} />
+        <usersStack.Screen
+          name="Splash"
+          component={SplashScreen}
+          options={{ headerShown: false }}
+        />
+        <usersStack.Screen
+          name="AuthCode"
+          component={AuthCodeScreen}
+          options={{ headerShown: false }}
+        />
+        <usersStack.Screen
+          name="Email"
+          component={EmailScreen}
+          options={{ headerShown: false }}
+        />
+        <usersStack.Screen
+          name="UserInfo"
+          component={UserInfoScreen}
+          options={{ headerShown: false }}
+        />
+        <usersStack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
       </usersStack.Navigator>
     </NavigationContainer>
   );

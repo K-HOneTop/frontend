@@ -31,7 +31,10 @@ const Users = ({ navigation }: SplashScreenProps) => {
         >
           <Text style={styles.signInText}>가입하기</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.logInBtnBox}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Login")}
+          style={styles.logInBtnBox}
+        >
           <Text style={styles.logInText}>로그인하기</Text>
         </TouchableOpacity>
       </View>

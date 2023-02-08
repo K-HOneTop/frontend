@@ -1,6 +1,14 @@
 export type UsersStackParamList = {
   Splash: undefined;
+  AuthCode: string;
   Email: string;
-  Nickname: string;
-  Password: string;
+  UserInfo: {
+    name: string;
+    password: string;
+    nickName: string;
+  };
+  Login: {
+    userName: string;
+    userPW: string;
+  };
 };

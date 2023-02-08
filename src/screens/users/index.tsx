@@ -9,7 +9,7 @@ import { UsersStackParamList } from "../../types/stacks/StackTypes";
 export type SplashScreenProps = StackScreenProps<UsersStackParamList, "Splash">;
 
 //Splash navigation 추가 필요
-const Users = () => {
+const Users = ({ navigation }: SplashScreenProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
@@ -25,7 +25,10 @@ const Users = () => {
         </View>
       </View>
       <View style={styles.btmArea}>
-        <TouchableOpacity style={styles.signInBtnBox}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Email")}
+          style={styles.signInBtnBox}
+        >
           <Text style={styles.signInText}>가입하기</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.logInBtnBox}>

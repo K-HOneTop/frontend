@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
@@ -6,9 +6,20 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { UsersStackParamList } from "../../types/stacks/StackTypes";
 
 //Export type
-export type SplashScreenProps = StackScreenProps<UsersStackParamList, "Splash">;
+export type WelcomeScreenProps = StackScreenProps<
+  UsersStackParamList,
+  "Welcome"
+>;
 
-const Users = ({ navigation }: SplashScreenProps) => {
+const Welcome = ({ navigation }: WelcomeScreenProps) => {
+  const [time, setTime] = useState<Boolean>(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTime(true);
+    }, 3000);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
@@ -25,12 +36,6 @@ const Users = ({ navigation }: SplashScreenProps) => {
       </View>
       <View style={styles.btmArea}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Email")}
-          style={styles.signInBtnBox}
-        >
-          <Text style={styles.signInText}>가입하기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={() => navigation.navigate("Login")}
           style={styles.logInBtnBox}
         >
@@ -41,7 +46,7 @@ const Users = ({ navigation }: SplashScreenProps) => {
   );
 };
 
-export default Users;
+export default Welcome;
 
 const styles = StyleSheet.create({
   container: {
@@ -50,16 +55,15 @@ const styles = StyleSheet.create({
   },
 
   topArea: {
-    flex: 0.5,
+    flex: 0.8,
     alignItems: "center",
     //backgroundColor: "green",
   },
 
   logoArea: {
-    marginTop: 90,
-    flex: 0.3,
-    width: 200,
-    height: 56,
+    marginTop: 174,
+    width: 187.5,
+    height: 187.5,
     backgroundColor: "#D9D9D9",
   },
 
@@ -91,24 +95,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //backgroundColor: "pink",
   },
-
-  signInBtnBox: {
-    backgroundColor: "#222222",
-    width: 335,
-    height: 52,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 6,
-    marginBottom: 10,
-  },
-
-  signInText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-  },
-
   logInBtnBox: {
-    backgroundColor: "#868686",
+    backgroundColor: "#222222",
     width: 335,
     height: 52,
     justifyContent: "center",

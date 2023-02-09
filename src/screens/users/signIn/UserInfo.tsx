@@ -65,7 +65,7 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
         <TouchableOpacity
-          //onPress={() => navigation.navigate("AuthCode")} 화면 넣어야 함
+          onPress={() => navigation.navigate("Welcome")}
           style={styles.nextBtnBox}
         >
           <Text style={styles.nextText}>다음</Text>

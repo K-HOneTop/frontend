@@ -11,4 +11,5 @@ export type UsersStackParamList = {
     userName: string;
     userPW: string;
   };
+  Welcome: undefined;
 };

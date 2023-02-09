@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
+
+import { TextInput } from "react-native-paper"; //비밀번호 눈 아이콘
 
 //Users Stack
 import { UsersStackParamList } from "../../../types/stacks/StackTypes";
@@ -18,6 +14,8 @@ const Login = ({ navigation }: LoginScreenProps) => {
   const [userEmail, setUserEmail] = useState<String>("");
   const [userPW, setUserPW] = useState<String>("");
 
+  const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
+
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
@@ -28,15 +26,28 @@ const Login = ({ navigation }: LoginScreenProps) => {
             placeholder="이메일"
             placeholderTextColor="#ADADAD"
             onChangeText={(userEmail) => setUserEmail(userEmail)}
+            underlineColor="#F3F3F3"
+            activeUnderlineColor="#F3F3F3"
+            selectionColor="black"
           />
-          <TextInput
-            style={styles.passwordInputBox}
-            secureTextEntry={true}
-            placeholder="비밀번호"
-            placeholderTextColor="#ADADAD"
-            onChangeText={(userPW) => setUserPW(userPW)}
-          />
-          {/*눈 모양 아이콘 추가하기*/}
+          <View>
+            <TextInput
+              style={styles.passwordInputBox}
+              secureTextEntry={!pwVisible}
+              placeholder="비밀번호"
+              placeholderTextColor="#ADADAD"
+              onChangeText={(userPW) => setUserPW(userPW)}
+              underlineColor="#F3F3F3"
+              activeUnderlineColor="#F3F3F3"
+              selectionColor="black"
+              right={
+                <TextInput.Icon
+                  icon={pwVisible ? "eye" : "eye-off"}
+                  onPress={() => setPWVisible(!pwVisible)}
+                />
+              }
+            />
+          </View>
           <TouchableOpacity>
             <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>
           </TouchableOpacity>
@@ -89,7 +100,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "400",
     marginTop: 16,
-    paddingLeft: 16,
   },
 
   passwordInputBox: {
@@ -101,19 +111,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "400",
     marginTop: 8,
-    paddingLeft: 16,
-  },
-
-  nickNameInputBox: {
-    width: 335,
-    height: 52,
-    backgroundColor: "#F3F3F3",
-    borderRadius: 6,
-    borderColor: "#F3F3F3",
-    fontSize: 17,
-    fontWeight: "400",
-    marginTop: 22,
-    paddingLeft: 16,
   },
 
   forgotPWNotice: {

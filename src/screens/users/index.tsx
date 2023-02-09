@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 6,
-    marginBottom: 3,
+    marginBottom: 10,
   },
 
   signInText: {

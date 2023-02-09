@@ -48,13 +48,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
   topArea: {
-    flex: 0.3,
-    justifyContent: "flex-end",
+    flex: 0.5,
     alignItems: "center",
     //backgroundColor: "green",
   },
+
   logoArea: {
+    marginTop: 90,
     flex: 0.3,
     width: 200,
     height: 56,
@@ -62,7 +64,7 @@ const styles = StyleSheet.create({
   },
 
   midArea: {
-    flex: 0.9,
+    flex: 0.3,
     justifyContent: "flex-end",
     alignItems: "center",
     //backgroundColor: "blue",
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
   },
 
   btmArea: {
-    flex: 0.4,
+    flex: 0.3,
     justifyContent: "center",
     alignItems: "center",
     //backgroundColor: "pink",
@@ -101,6 +103,7 @@ const styles = StyleSheet.create({
 
   signInText: {
     color: "#FFFFFF",
+    fontSize: 16,
   },
 
   logInBtnBox: {
@@ -115,5 +118,6 @@ const styles = StyleSheet.create({
 
   logInText: {
     color: "#FFFFFF",
+    fontSize: 16,
   },
 });

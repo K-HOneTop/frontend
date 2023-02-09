@@ -28,12 +28,12 @@ const App = () => {
         <usersStack.Screen
           name="AuthCode"
           component={AuthCodeScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: true }}
         />
         <usersStack.Screen
           name="Email"
           component={EmailScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: true }}
         />
         <usersStack.Screen
           name="UserInfo"

@@ -28,7 +28,7 @@ const Email = ({ navigation }: EmailScreenProps) => {
             placeholderTextColor="#ADADAD"
             onChangeText={(email) => setEmail(email)}
           />
-          <TouchableOpacity style={styles.personalInfoNotice}>
+          <TouchableOpacity>
             <Text style={styles.personalInfoNotice}>
               개인정보 보호 정책 보기
             </Text>
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     textDecorationLine: "underline",
     marginTop: 8,
+    color: "#ADADAD",
   },
 
   midArea: {

@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 6,
-    marginTop: 3,
+    marginTop: 6,
   },
 
   logInText: {

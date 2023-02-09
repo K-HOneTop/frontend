@@ -38,12 +38,12 @@ const App = () => {
         <usersStack.Screen
           name="UserInfo"
           component={UserInfoScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: true }}
         />
         <usersStack.Screen
           name="Login"
           component={LoginScreen}
-          options={{ headerShown: false }}
+          options={{ headerShown: true }}
         />
       </usersStack.Navigator>
     </NavigationContainer>

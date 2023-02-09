@@ -31,8 +31,8 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
             placeholder="이름"
             placeholderTextColor="#ADADAD"
             onChangeText={(name) => setName(name)}
-            underlineColor="#F3F3F3"
-            activeUnderlineColor="#F3F3F3"
+            underlineColor="white"
+            activeUnderlineColor="white"
             selectionColor="black"
           />
           <TextInput
@@ -41,8 +41,8 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
             placeholder="비밀번호"
             placeholderTextColor="#ADADAD"
             onChangeText={(password) => setPassWord(password)}
-            underlineColor="#F3F3F3"
-            activeUnderlineColor="#F3F3F3"
+            underlineColor="white"
+            activeUnderlineColor="white"
             selectionColor="black"
             right={
               <TextInput.Icon
@@ -51,14 +51,13 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
               />
             }
           />
-          {/*눈모양 아이콘 추가해야함*/}
           <TextInput
             style={styles.nickNameInputBox}
             placeholder="닉네임"
             placeholderTextColor="#ADADAD"
             onChangeText={(nickName) => setNickName(nickName)}
-            underlineColor="#F3F3F3"
-            activeUnderlineColor="#F3F3F3"
+            underlineColor="white"
+            activeUnderlineColor="white"
             selectionColor="black"
           />
         </View>

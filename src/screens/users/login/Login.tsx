@@ -27,8 +27,8 @@ const Login = ({ navigation }: LoginScreenProps) => {
             placeholder="이메일"
             placeholderTextColor="#ADADAD"
             onChangeText={(userEmail) => setUserEmail(userEmail)}
-            underlineColor="#F3F3F3"
-            activeUnderlineColor="#F3F3F3"
+            underlineColor="white"
+            activeUnderlineColor="white"
             selectionColor="black"
           />
           <View>
@@ -38,8 +38,8 @@ const Login = ({ navigation }: LoginScreenProps) => {
               placeholder="비밀번호"
               placeholderTextColor="#ADADAD"
               onChangeText={(userPW) => setUserPW(userPW)}
-              underlineColor="#F3F3F3"
-              activeUnderlineColor="#F3F3F3"
+              underlineColor="white"
+              activeUnderlineColor="white"
               selectionColor="black"
               right={
                 <TextInput.Icon

@@ -47,6 +47,7 @@ export default Users;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
 
   topArea: {
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+    color: "#222222",
   },
 
   introTwo: {

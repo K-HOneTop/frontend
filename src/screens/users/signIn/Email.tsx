@@ -23,6 +23,7 @@ const Email = ({ navigation }: EmailScreenProps) => {
         <Text style={styles.notice}>이메일을 입력하세요</Text>
         <View style={styles.inputAreaContainer}>
           <TextInput
+            selectionColor="black"
             style={styles.emailInputBox}
             placeholder="empty@gmail.com"
             placeholderTextColor="#ADADAD"

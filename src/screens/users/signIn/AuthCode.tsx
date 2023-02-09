@@ -26,6 +26,7 @@ const AuthCode = ({ navigation }: AuthCodeScreenProps) => {
         <Text style={styles.notice}>인증코드를 입력하세요</Text>
         <View style={styles.inputAreaContainer}>
           <TextInput
+            selectionColor="black"
             style={styles.authCodeInputBox}
             placeholderTextColor="#ADADAD"
             onChangeText={(authCode) => setAuthCode(authCode)}

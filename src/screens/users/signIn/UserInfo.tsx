@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
+
+//비밀번호 눈 아이콘 이슈로 새로 추가함
+import { TextInput } from "react-native-paper";
 
 //Users Stack
 import { UsersStackParamList } from "../../../types/stacks/StackTypes";
@@ -22,6 +19,8 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
   const [password, setPassWord] = useState<String>("");
   const [nickName, setNickName] = useState<String>("");
 
+  const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
+
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
@@ -32,13 +31,25 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
             placeholder="이름"
             placeholderTextColor="#ADADAD"
             onChangeText={(name) => setName(name)}
+            underlineColor="#F3F3F3"
+            activeUnderlineColor="#F3F3F3"
+            selectionColor="black"
           />
           <TextInput
             style={styles.passwordInputBox}
-            secureTextEntry={true}
+            secureTextEntry={!pwVisible}
             placeholder="비밀번호"
             placeholderTextColor="#ADADAD"
             onChangeText={(password) => setPassWord(password)}
+            underlineColor="#F3F3F3"
+            activeUnderlineColor="#F3F3F3"
+            selectionColor="black"
+            right={
+              <TextInput.Icon
+                icon={pwVisible ? "eye" : "eye-off"}
+                onPress={() => setPWVisible(!pwVisible)}
+              />
+            }
           />
           {/*눈모양 아이콘 추가해야함*/}
           <TextInput
@@ -46,6 +57,9 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
             placeholder="닉네임"
             placeholderTextColor="#ADADAD"
             onChangeText={(nickName) => setNickName(nickName)}
+            underlineColor="#F3F3F3"
+            activeUnderlineColor="#F3F3F3"
+            selectionColor="black"
           />
         </View>
       </View>
@@ -96,7 +110,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "400",
     marginTop: 16,
-    paddingLeft: 16,
   },
 
   passwordInputBox: {
@@ -108,7 +121,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "400",
     marginTop: 8,
-    paddingLeft: 16,
   },
 
   nickNameInputBox: {
@@ -120,7 +132,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "400",
     marginTop: 22,
-    paddingLeft: 16,
   },
 
   personalInfoNotice: {

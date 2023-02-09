@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
-import { TextInput } from "react-native-paper"; //비밀번호 눈 아이콘
+//비밀번호 눈 아이콘 이슈로 새로 추가함
+import { TextInput } from "react-native-paper";
 
 //Users Stack
 import { UsersStackParamList } from "../../../types/stacks/StackTypes";
@@ -55,10 +56,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity
-          //onPress={() => navigation.navigate("AuthCode")} 화면 넣어야 함
-          style={styles.loginBtnBox}
-        >
+        <TouchableOpacity style={styles.loginBtnBox}>
           <Text style={styles.loginText}>로그인하기</Text>
         </TouchableOpacity>
       </View>

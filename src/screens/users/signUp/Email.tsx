@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
@@ -21,8 +22,12 @@ const Email = ({ navigation }: EmailScreenProps) => {
 
   //이메일 전달 API
   const nextBtnClick = () => {
-    userServices.Email(email);
-    navigation.navigate("AuthCode");
+    if (email === "") {
+      Alert.alert("안내", "이메일을 입력하세요.");
+    } else {
+      userServices.Email(email);
+      navigation.navigate("AuthCode");
+    }
   };
 
   return (

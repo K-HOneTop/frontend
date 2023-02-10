@@ -1,1 +1,1 @@
-export const SERVER_URL = "http://localhost:8080";
+export const SERVER_URL = "http://10.0.2.2:8080"; //안드로이드는 에뮬레이터 아이피가 10.0.2.2 라서 IOS는 아닐 수도 있으니까 확인해보세요

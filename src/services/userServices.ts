@@ -12,10 +12,13 @@ class userServices {
       password: password,
     };
     const data = JSON.stringify(dataString);
+    console.log(data);
 
     try {
-      const response = await axios.post(SERVER_URL + "/member/signin", {
-        data,
+      const response = await axios.post(SERVER_URL + "/member/signin", data, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
       });
       console.log(response);
       return response;
@@ -27,10 +30,12 @@ class userServices {
   //이메일
   async Email(email: string) {
     emailDataString = email;
-    const URL = SERVER_URL + "/mail?rcv=" + emailDataString;
-    console.log(URL);
+    //const URL = SERVER_URL + "/mail?rcv=" + emailDataString;
+    //console.log(URL);
     try {
-      const response = await axios.get(URL);
+      const response = await axios.get(
+        `${SERVER_URL}/mail?rcv=${emailDataString}`
+      );
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -61,10 +66,13 @@ class userServices {
       password: password,
     };
     const data = JSON.stringify(dataString);
+    console.log(data);
 
     try {
-      const response = await axios.post(SERVER_URL + "/member/signup", {
-        data,
+      const response = await axios.post(SERVER_URL + "/member/signup", data, {
+        headers: {
+          "Content-Type": `application/json`,
+        },
       });
       console.log(response);
     } catch (error) {

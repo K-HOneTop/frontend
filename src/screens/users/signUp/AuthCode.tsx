@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
@@ -24,8 +25,12 @@ const AuthCode = ({ navigation }: AuthCodeScreenProps) => {
 
   //인증코드 전송 API 연결
   const nextBtnLogin = () => {
-    userServices.AuthCode(authCode);
-    navigation.navigate("UserInfo");
+    if (authCode === "") {
+      Alert.alert("안내", "인증코드를 입력하세요.");
+    } else {
+      userServices.AuthCode(authCode);
+      navigation.navigate("UserInfo");
+    }
   };
 
   return (

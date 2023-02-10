@@ -6,7 +6,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { TextInput } from "react-native-paper";
 
 //Users Stack
-import { UsersStackParamList } from "../../../types/stacks/StackTypes";
+import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 
 //Export type
 export type LoginScreenProps = StackScreenProps<UsersStackParamList, "Login">;

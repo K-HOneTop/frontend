@@ -9,7 +9,7 @@ import {
 import { StackScreenProps } from "@react-navigation/stack";
 
 //Users Stack
-import { UsersStackParamList } from "../../../types/stacks/StackTypes";
+import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 
 //Export type
 export type AuthCodeScreenProps = StackScreenProps<

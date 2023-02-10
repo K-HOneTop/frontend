@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
 //Users Stack
-import { UsersStackParamList } from "../../types/stacks/StackTypes";
+import { UsersStackParamList } from "../../types/stacks/UserStackTypes";
 
 //Export type
 export type SplashScreenProps = StackScreenProps<UsersStackParamList, "Splash">;

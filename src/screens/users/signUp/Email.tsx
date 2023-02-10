@@ -8,6 +8,8 @@ import {
 } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
+import userServices from "../../../services/userServices";
+
 //Users Stack
 import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 
@@ -15,7 +17,13 @@ import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 export type EmailScreenProps = StackScreenProps<UsersStackParamList, "Email">;
 
 const Email = ({ navigation }: EmailScreenProps) => {
-  const [email, setEmail] = useState<String>("");
+  const [email, setEmail] = useState<string>("");
+
+  //이메일 전달 API
+  const nextBtnClick = () => {
+    userServices.Email(email);
+    navigation.navigate("AuthCode");
+  };
 
   return (
     <View style={styles.container}>
@@ -38,10 +46,7 @@ const Email = ({ navigation }: EmailScreenProps) => {
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("AuthCode")}
-          style={styles.nextBtnBox}
-        >
+        <TouchableOpacity onPress={nextBtnClick} style={styles.nextBtnBox}>
           <Text style={styles.nextText}>다음</Text>
         </TouchableOpacity>
       </View>

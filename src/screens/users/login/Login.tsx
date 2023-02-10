@@ -5,6 +5,9 @@ import { StackScreenProps } from "@react-navigation/stack";
 //비밀번호 눈 아이콘 이슈로 새로 추가함
 import { TextInput } from "react-native-paper";
 
+//userService 임포트
+import userService from "../../../services/userServices";
+
 //Users Stack
 import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 
@@ -12,10 +15,16 @@ import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 export type LoginScreenProps = StackScreenProps<UsersStackParamList, "Login">;
 
 const Login = ({ navigation }: LoginScreenProps) => {
-  const [userEmail, setUserEmail] = useState<String>("");
-  const [userPW, setUserPW] = useState<String>("");
+  const [userEmail, setUserEmail] = useState<string>("");
+  const [userPW, setUserPW] = useState<string>("");
 
   const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
+
+  //로그인 API 연결
+  const loginBtnClick = () => {
+    userService.SignIn(userEmail, userPW);
+    navigation.navigate("Home");
+  };
 
   return (
     <View style={styles.container}>
@@ -56,7 +65,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity style={styles.loginBtnBox}>
+        <TouchableOpacity style={styles.loginBtnBox} onPress={loginBtnClick}>
           <Text style={styles.loginText}>로그인하기</Text>
         </TouchableOpacity>
       </View>

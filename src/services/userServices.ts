@@ -1,6 +1,8 @@
 import axios from "axios";
-import { signIn, signUp } from "../types/UserTypes";
+import { email, authCode, signIn, signUp } from "../types/UserTypes";
 import { SERVER_URL } from "../data/serverData";
+
+let emailDataString: email;
 
 class userServices {
   //로그인
@@ -15,17 +17,48 @@ class userServices {
       const response = await axios.post(SERVER_URL + "/member/signin", {
         data,
       });
+      console.log(response);
+      return response;
     } catch (error) {
       console.log(error);
     }
   }
 
+  //이메일
+  async Email(email: string) {
+    emailDataString = email;
+    const URL = SERVER_URL + "/mail?rcv=" + emailDataString;
+    console.log(URL);
+    try {
+      const response = await axios.get(URL);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //인증코드
+  async AuthCode(authCode: string) {
+    const URL =
+      SERVER_URL + "/mail/auth?rcv=" + emailDataString + "&code=" + authCode;
+    console.log(URL);
+
+    try {
+      const response = await axios.get(URL);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+    //서버에 인증코드 전송
+  }
+
   //회원가입
-  async SignUp(email: string, password: string, nickname: string) {
+  async SignUp(name: string, password: string, nickname: string) {
     const dataString: signUp = {
-      email: email,
-      password: password,
+      name: name,
+      email: emailDataString,
       nickname: nickname,
+      password: password,
     };
     const data = JSON.stringify(dataString);
 
@@ -33,6 +66,7 @@ class userServices {
       const response = await axios.post(SERVER_URL + "/member/signup", {
         data,
       });
+      console.log(response);
     } catch (error) {
       console.log(error);
     }

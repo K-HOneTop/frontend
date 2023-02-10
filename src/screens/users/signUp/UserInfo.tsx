@@ -5,6 +5,9 @@ import { StackScreenProps } from "@react-navigation/stack";
 //비밀번호 눈 아이콘 이슈로 새로 추가함
 import { TextInput } from "react-native-paper";
 
+//userService 임포트
+import userService from "../../../services/userServices";
+
 //Users Stack
 import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 
@@ -15,11 +18,17 @@ export type UserInfoScreenProps = StackScreenProps<
 >;
 
 const UserInfo = ({ navigation }: UserInfoScreenProps) => {
-  const [name, setName] = useState<String>("");
-  const [password, setPassWord] = useState<String>("");
-  const [nickName, setNickName] = useState<String>("");
+  const [name, setName] = useState<string>("");
+  const [password, setPassWord] = useState<string>("");
+  const [nickName, setNickName] = useState<string>("");
 
   const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
+
+  //회원가입 API 연결
+  const signUpBtnClick = () => {
+    userService.SignUp(name, password, nickName);
+    navigation.navigate("Welcome");
+  };
 
   return (
     <View style={styles.container}>
@@ -65,7 +74,8 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Welcome")}
+          //onPress={() => navigation.navigate("Welcome")}
+          onPress={signUpBtnClick}
           style={styles.nextBtnBox}
         >
           <Text style={styles.nextText}>다음</Text>

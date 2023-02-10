@@ -4,11 +4,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 //import users screens
 import SplashScreen from "./src/screens/users/index";
-import AuthCodeScreen from "./src/screens/users/signIn/AuthCode";
-import EmailScreen from "./src/screens/users/signIn/Email";
-import UserInfoScreen from "./src/screens/users/signIn/UserInfo";
+import AuthCodeScreen from "./src/screens/users/signUp/AuthCode";
+import EmailScreen from "./src/screens/users/signUp/Email";
+import UserInfoScreen from "./src/screens/users/signUp/UserInfo";
 import LoginScreen from "./src/screens/users/login/Login";
-import WelcomeScreen from "./src/screens/users/signIn/Welcome";
+import WelcomeScreen from "./src/screens/users/signUp/Welcome";
 
 //import users types
 import { UsersStackParamList } from "./src/types/stacks/StackTypes";

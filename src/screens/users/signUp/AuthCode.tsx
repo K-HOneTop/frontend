@@ -8,8 +8,10 @@ import {
 } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
+import userServices from "../../../services/userServices";
+
 //Users Stack
-import { UsersStackParamList } from "../../../types/stacks/StackTypes";
+import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 
 //Export type
 export type AuthCodeScreenProps = StackScreenProps<
@@ -18,7 +20,13 @@ export type AuthCodeScreenProps = StackScreenProps<
 >;
 
 const AuthCode = ({ navigation }: AuthCodeScreenProps) => {
-  const [authCode, setAuthCode] = useState<String>("");
+  const [authCode, setAuthCode] = useState<string>("");
+
+  //인증코드 전송 API 연결
+  const nextBtnLogin = () => {
+    userServices.AuthCode(authCode);
+    navigation.navigate("UserInfo");
+  };
 
   return (
     <View style={styles.container}>
@@ -35,10 +43,7 @@ const AuthCode = ({ navigation }: AuthCodeScreenProps) => {
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("UserInfo")}
-          style={styles.nextBtnBox}
-        >
+        <TouchableOpacity onPress={nextBtnLogin} style={styles.nextBtnBox}>
           <Text style={styles.nextText}>다음</Text>
         </TouchableOpacity>
       </View>

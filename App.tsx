@@ -4,17 +4,22 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 //import users screens
 import SplashScreen from "./src/screens/users/index";
-import AuthCodeScreen from "./src/screens/users/signIn/AuthCode";
-import EmailScreen from "./src/screens/users/signIn/Email";
-import UserInfoScreen from "./src/screens/users/signIn/UserInfo";
+import AuthCodeScreen from "./src/screens/users/signUp/AuthCode";
+import EmailScreen from "./src/screens/users/signUp/Email";
+import UserInfoScreen from "./src/screens/users/signUp/UserInfo";
 import LoginScreen from "./src/screens/users/login/Login";
-import WelcomeScreen from "./src/screens/users/signIn/Welcome";
+import WelcomeScreen from "./src/screens/users/signUp/Welcome";
 
-//import users types
-import { UsersStackParamList } from "./src/types/stacks/StackTypes";
+//import home screens
+import HomeScreen from "./src/screens/home/index";
 
-//define user screen stacks
+//import types
+import { UsersStackParamList } from "./src/types/stacks/UserStackTypes";
+import { HomeStackParamList } from "./src/types/stacks/HomeStackTypes";
+
+//define screen stacks
 const usersStack = createNativeStackNavigator<UsersStackParamList>();
+const homeStack = createNativeStackNavigator<HomeStackParamList>();
 
 //편의상 Splash로 표기, stack에 다른 화면 type 지정 필요
 const App = () => {
@@ -50,6 +55,11 @@ const App = () => {
           <usersStack.Screen
             name="Welcome"
             component={WelcomeScreen}
+            options={{ headerShown: false }}
+          />
+          <homeStack.Screen
+            name="Home"
+            component={HomeScreen}
             options={{ headerShown: false }}
           />
         </usersStack.Group>

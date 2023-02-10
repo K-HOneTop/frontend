@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
 //비밀번호 눈 아이콘 이슈로 새로 추가함
@@ -26,8 +26,12 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
 
   //회원가입 API 연결
   const signUpBtnClick = () => {
-    userService.SignUp(name, password, nickName);
-    navigation.navigate("Welcome");
+    if (name === "" || password === "" || nickName === "") {
+      Alert.alert("안내", "빈 칸을 모두 입력해주세요.");
+    } else {
+      userService.SignUp(name, password, nickName);
+      navigation.navigate("Welcome");
+    }
   };
 
   return (

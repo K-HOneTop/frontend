@@ -30,8 +30,10 @@ const AuthCode = ({ navigation }: AuthCodeScreenProps) => {
     } else {
       const response = await userServices.AuthCode(authCode);
       console.log(response);
-      if (response == 200) navigation.navigate("UserInfo");
-      else Alert.alert("안내", "인증번호를 다시 입력하세요.");
+      if (response == 200) {
+        Alert.alert("안내", "인증되었습니다.");
+        navigation.navigate("UserInfo");
+      } else Alert.alert("안내", "인증번호를 다시 입력하세요.");
     }
   };
 

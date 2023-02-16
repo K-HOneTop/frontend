@@ -161,5 +161,6 @@ const styles = StyleSheet.create({
   loginText: {
     color: "#FFFFFF",
     fontSize: 16,
+    fontWeight: "600",
   },
 });

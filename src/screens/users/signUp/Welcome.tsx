@@ -27,7 +27,10 @@ const Welcome = ({ navigation }: WelcomeScreenProps) => {
       </View>
       <View style={styles.midArea}>
         <View style={styles.intro}>
-          <Text style={styles.introOne}>취뽀의 자격을 시작해보세요</Text>
+          <View style={styles.welcomeIntro}>
+            <Text style={styles.welcomeIntroOne}>취뽀의 자격을 </Text>
+            <Text style={styles.welcomeIntroTwo}>시작해보세요</Text>
+          </View>
           <Text style={styles.introTwo}>취뽀의 자격에서 자격증을</Text>
           <Text style={styles.introTwo}>
             뭐시기 저시기 뭐시기 저시기해보세요!
@@ -78,11 +81,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  introOne: {
-    fontSize: 20,
-    fontWeight: "bold",
+  welcomeIntro: {
+    flexDirection: "row",
     marginBottom: 10,
+  },
+  welcomeIntroOne: {
+    fontSize: 20,
+    color: "#ADADAD",
+    fontWeight: "700",
+  },
+  welcomeIntroTwo: {
+    fontSize: 20,
     color: "#222222",
+    fontWeight: "700",
   },
 
   introTwo: {
@@ -108,5 +119,6 @@ const styles = StyleSheet.create({
   logInText: {
     color: "#FFFFFF",
     fontSize: 16,
+    fontWeight: "600",
   },
 });

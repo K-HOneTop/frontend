@@ -76,6 +76,7 @@ class userServices {
         },
       });
       console.log(response);
+      return response.status;
     } catch (error) {
       console.log(error);
     }

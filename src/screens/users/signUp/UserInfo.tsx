@@ -25,12 +25,13 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
   const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
 
   //회원가입 API 연결
-  const signUpBtnClick = () => {
+  const signUpBtnClick = async () => {
     if (name === "" || password === "" || nickName === "") {
       Alert.alert("안내", "빈 칸을 모두 입력해주세요.");
     } else {
-      userService.SignUp(name, password, nickName);
-      navigation.navigate("Welcome");
+      const response = await userService.SignUp(name, password, nickName);
+      if (response === 200) navigation.navigate("Welcome");
+      else Alert.alert("안내", "이미 존재하는 회원입니다.");
     }
   };
 

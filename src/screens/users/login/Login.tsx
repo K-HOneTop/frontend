@@ -21,12 +21,14 @@ const Login = ({ navigation }: LoginScreenProps) => {
   const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
 
   //로그인 API 연결
-  const loginBtnClick = () => {
+  const loginBtnClick = async () => {
     if (userEmail === "" || userPW === "") {
       Alert.alert("안내", "빈 칸을 모두 입력해주세요.");
     } else {
-      userService.SignIn(userEmail, userPW);
-      navigation.navigate("Home");
+      const response = await userService.SignIn(userEmail, userPW);
+      console.log(response);
+      if (response == 200) navigation.navigate("Home");
+      else Alert.alert("안내", "로그인 정보를 다시 입력해주세요.");
     }
   };
 

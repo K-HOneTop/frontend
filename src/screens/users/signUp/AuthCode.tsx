@@ -24,12 +24,14 @@ const AuthCode = ({ navigation }: AuthCodeScreenProps) => {
   const [authCode, setAuthCode] = useState<string>("");
 
   //인증코드 전송 API 연결
-  const nextBtnLogin = () => {
+  const nextBtnLogin = async () => {
     if (authCode === "") {
       Alert.alert("안내", "인증코드를 입력하세요.");
     } else {
-      userServices.AuthCode(authCode);
-      navigation.navigate("UserInfo");
+      const response = await userServices.AuthCode(authCode);
+      console.log(response);
+      if (response == 200) navigation.navigate("UserInfo");
+      else Alert.alert("안내", "인증번호를 다시 입력하세요.");
     }
   };
 

@@ -20,8 +20,8 @@ class userServices {
           "Content-Type": `application/json`,
         },
       });
-      console.log(response);
-      return response;
+      console.log(response.status);
+      return response.status;
     } catch (error) {
       console.log(error);
     }
@@ -51,6 +51,7 @@ class userServices {
     try {
       const response = await axios.get(URL);
       console.log(response);
+      return response.status;
     } catch (error) {
       console.log(error);
     }

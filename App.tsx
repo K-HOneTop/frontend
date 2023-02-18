@@ -13,57 +13,72 @@ import WelcomeScreen from "./src/screens/users/signUp/Welcome";
 //import home screens
 import HomeScreen from "./src/screens/home/index";
 
+
+//import bookmark screens
+import BookmarkScreen from "./src/screens/Bookmark/index";
+
 //import types
 import { UsersStackParamList } from "./src/types/stacks/UserStackTypes";
 import { HomeStackParamList } from "./src/types/stacks/HomeStackTypes";
+import { BookmarkStackParamList } from "./src/types/stacks/BookmarkStackTypes";
 
 //define screen stacks
 const usersStack = createNativeStackNavigator<UsersStackParamList>();
 const homeStack = createNativeStackNavigator<HomeStackParamList>();
+const bookmarkStack = createNativeStackNavigator<BookmarkStackParamList>();
 
 //편의상 Splash로 표기, stack에 다른 화면 type 지정 필요
 const App = () => {
   return (
     <NavigationContainer>
-      <usersStack.Navigator initialRouteName="Splash">
-        <usersStack.Group screenOptions={{ headerShadowVisible: false }}>
-          <usersStack.Screen
-            name="Splash"
-            component={SplashScreen}
-            options={{ headerShown: false }}
+      <bookmarkStack.Navigator initialRouteName="Main">
+        <bookmarkStack.Group screenOptions={{ headerShadowVisible: false }}>
+          <bookmarkStack.Screen
+              name="Main"
+              component={BookmarkScreen}
+              options={{ headerShown: false }}
           />
-          <usersStack.Screen
-            name="AuthCode"
-            component={AuthCodeScreen}
-            options={{ title: "", headerShown: true }}
-          />
-          <usersStack.Screen
-            name="Email"
-            component={EmailScreen}
-            options={{ title: "", headerShown: true }}
-          />
-          <usersStack.Screen
-            name="UserInfo"
-            component={UserInfoScreen}
-            options={{ title: "", headerShown: true }}
-          />
-          <usersStack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ title: "", headerShown: true }}
-          />
-          <usersStack.Screen
-            name="Welcome"
-            component={WelcomeScreen}
-            options={{ headerShown: false }}
-          />
-          <homeStack.Screen
-            name="Home"
-            component={HomeScreen}
-            options={{ headerShown: false }}
-          />
-        </usersStack.Group>
-      </usersStack.Navigator>
+        </bookmarkStack.Group>
+      </bookmarkStack.Navigator>
+      {/*<usersStack.Navigator initialRouteName="Splash">*/}
+      {/*  <usersStack.Group screenOptions={{ headerShadowVisible: false }}>*/}
+      {/*    <usersStack.Screen*/}
+      {/*      name="Splash"*/}
+      {/*      component={SplashScreen}*/}
+      {/*      options={{ headerShown: false }}*/}
+      {/*    />*/}
+      {/*    <usersStack.Screen*/}
+      {/*      name="AuthCode"*/}
+      {/*      component={AuthCodeScreen}*/}
+      {/*      options={{ title: "", headerShown: true }}*/}
+      {/*    />*/}
+      {/*    <usersStack.Screen*/}
+      {/*      name="Email"*/}
+      {/*      component={EmailScreen}*/}
+      {/*      options={{ title: "", headerShown: true }}*/}
+      {/*    />*/}
+      {/*    <usersStack.Screen*/}
+      {/*      name="UserInfo"*/}
+      {/*      component={UserInfoScreen}*/}
+      {/*      options={{ title: "", headerShown: true }}*/}
+      {/*    />*/}
+      {/*    <usersStack.Screen*/}
+      {/*      name="Login"*/}
+      {/*      component={LoginScreen}*/}
+      {/*      options={{ title: "", headerShown: true }}*/}
+      {/*    />*/}
+      {/*    <usersStack.Screen*/}
+      {/*      name="Welcome"*/}
+      {/*      component={WelcomeScreen}*/}
+      {/*      options={{ headerShown: false }}*/}
+      {/*    />*/}
+      {/*    <homeStack.Screen*/}
+      {/*      name="Home"*/}
+      {/*      component={HomeScreen}*/}
+      {/*      options={{ headerShown: false }}*/}
+      {/*    />*/}
+      {/*  </usersStack.Group>*/}
+      {/*</usersStack.Navigator>*/}
     </NavigationContainer>
   );
 };

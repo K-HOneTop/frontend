@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {heightPercentageToDP as hp} from "react-native-responsive-screen";
 
 const styles = StyleSheet.create({
     container: {
@@ -21,7 +22,16 @@ const styles = StyleSheet.create({
     bottomArea:{
         flex:90,
         backgroundColor: 'orange',
-    }
+    },
+    DesignButton: {
+        backgroundColor: '#F56C3B',
+        borderRadius : 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding:7,
+        paddingLeft:10,
+        paddingRight:10,
+    },
 });
 
 export default styles;

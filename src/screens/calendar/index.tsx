@@ -29,6 +29,7 @@ import {
 import {getDefaultLocale} from "react-native-calendars/src/services";
 import {isToday} from "react-native-calendars/src/dateutils";
 import {black} from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+import CertificationFilter from "./components/CertificationFilter";
 
 
 
@@ -187,21 +188,27 @@ const Calendars = ({ navigation }: MainScreenProps) => {
                                                 {'필터링 버튼'}
                                             </Text>
                                         </TouchableOpacity>
-                                        <RBSheet
-                                            ref={ref => {
-                                                // @ts-ignore
-                                                this.RBSheet = ref;
-                                            }}
-                                            height={300}
-                                            openDuration={250}
-                                            customStyles={{
-                                                container: {
-                                                    justifyContent: "center",
-                                                    alignItems: "center"
-                                                }
-                                            }}
-                                        >
-                                            <Text>{'안녕'}</Text>
+                                            <RBSheet
+                                                ref={ref => {
+                                                    // @ts-ignore
+                                                    this.RBSheet = ref;
+                                                }}
+                                                closeOnDragDown={true} //false인지 true인지 물어보기
+                                                // closeOnPressMask={true}
+                                                height={hp(95)}
+                                                openDuration={100}
+                                                closeDuration={100}
+                                                customStyles={{
+                                                    wrapper: {
+                                                        backgroundColor: 'rgba(41, 41, 41, 0.5)',
+                                                    },
+                                                    container: {
+                                                        backgroundColor: 'white',
+                                                        borderTopLeftRadius: 30,
+                                                        borderTopRightRadius: 30,
+                                                    },
+                                                }}>
+                                            <CertificationFilter items={items}/>
                                         </RBSheet>
                                     </View>
                                 </View>

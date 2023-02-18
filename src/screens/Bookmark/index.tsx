@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 import {View, Text, StyleSheet} from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
-import {Picker} from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select'; //버전 낮아서 picker가 안먹는듯?
 
 //stack import
 import { BookmarkStackParamList } from "../../types/stacks/BookmarkStackTypes";
@@ -15,18 +15,8 @@ import {styles} from './styles';
 
 const Bookmark = ({ navigation }: BookmarkScreenProps) => {
     const [resultNum, setResultNum] = useState<number>(6);
-    const [sort, setSort] = useState("접수마감순");
+    const [sort, setSort] = useState();
 
-    const sortOptions = [
-        {
-            title: "접수마감순",
-            value: "dueDate",
-        },
-        {
-            title: "이름순",
-            value: "name",
-        }
-    ];
 
     const [selectedLanguage, setSelectedLanguage] = useState();
 
@@ -38,14 +28,20 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                         <Text style={customStyles.titleTxt}>{'즐겨찾기'}</Text>
                     </View>
                     <View style={styles.resultArea}>
-                        <View style={{flex:1, alignItems: 'flex-start',backgroundColor:'white'}}>
+                        <View style={{flex:8, alignItems: 'flex-start',backgroundColor:'white'}}>
                             <Text style={customStyles.resultTxt}>{'즐겨찾기 한 자격증 '}{resultNum}{'건'}</Text>
                         </View>
-                        <View style={{flex:1, alignItems: 'flex-end',backgroundColor:'red'}}>
-                            <Picker dropdownIconColor="red">
-                                <Picker.Item label="hello" value="key0" />
-                                <Picker.Item label="world" value="key1" />
-                            </Picker>
+                        <View style={{flex:2, alignItems: 'flex-end' ,backgroundColor:'red'}}>
+                            <RNPickerSelect
+                                useNativeAndroidPickerStyle={false}
+                                style={pickerSelectStyles}
+                                onValueChange={(sort) => setSort(sort)}
+
+                                items={[
+                                    {label: '접수마감순', value: 'dueDate'},
+                                    {label: '이름순', value: 'name'},
+                                ]}
+                            />
                         </View>
                     </View>
                     <View style={styles.cardArea}></View>
@@ -84,27 +80,20 @@ const customStyles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
-        borderBottomWidth: 1,
-        borderColor: 'black',
-        borderTopLeftRadius: 7,
-        borderTopRightRadius: 7,
-        width: '100%',
-        // height: hp(6),
-        paddingRight: 10,
-        // fontSize: wp(4),
-        marginBottom: 30,
+        fontSize:12,
+        fontWeight: "400",
+        color: "#8C8C8C",
+        paddingTop:5,
+        backgroundColor: 'pink',
+
     },
 
     inputAndroid: {
-        borderBottomWidth: 1,
-        borderColor: 'black',
-        borderTopLeftRadius: 7,
-        borderTopRightRadius: 7,
-        width: '100%',
-        // height: hp(6),
-        paddingRight: 10,
-        // fontSize: wp(4),
-        marginBottom: 30,
+        fontSize:12,
+        fontWeight: "400",
+        color: "#8C8C8C",
+        paddingTop:5,
+
     },
     iconContainer: {
         top: 10,

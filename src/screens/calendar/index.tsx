@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {Pressable, View, Text, StyleSheet, TouchableNativeFeedback} from "react-native";
+import React, {useEffect, useRef, useState} from "react";
+import {Pressable, View, Text, StyleSheet, TouchableNativeFeedback, TouchableOpacity} from "react-native";
 
 //calendars
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
@@ -9,6 +9,14 @@ import {LocaleConfig} from 'react-native-calendars';
 import { StackScreenProps } from "@react-navigation/stack";
 import {CalendarStackParamList} from "../../types/stacks/CalendarStackTypes";
 import RNPickerSelect from 'react-native-picker-select';
+
+
+//모달
+import RBSheet from "react-native-raw-bottom-sheet";
+
+
+//data type
+import certifications from "../../types/calendars/CertificationTypes";
 
 
 //design 관련
@@ -21,6 +29,7 @@ import {
 import {getDefaultLocale} from "react-native-calendars/src/services";
 import {isToday} from "react-native-calendars/src/dateutils";
 import {black} from "react-native-paper/lib/typescript/styles/themes/v2/colors";
+
 
 
 export type MainScreenProps = StackScreenProps<CalendarStackParamList, "Calendar">;
@@ -96,9 +105,8 @@ const CalendarHeader = ({currentYear, currentMonth}:Props) => {
 
 
 const Calendars = ({ navigation }: MainScreenProps) => {
-    const [date, setDate] = useState(new Date());
 
-    console.log(date.getMonth());
+
 
     return (
         <View style={styles.container}>
@@ -130,6 +138,7 @@ const Calendars = ({ navigation }: MainScreenProps) => {
                             const [month, setMonth] = useState(currentMonth);
 
 
+                            // @ts-ignore
                             // @ts-ignore
                             return (
                                 <View style={{flex:1, flexDirection: 'row'}}>
@@ -168,11 +177,32 @@ const Calendars = ({ navigation }: MainScreenProps) => {
                                         />
                                 </View>
                                     <View style = {{flex : 0.5, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end'}}>
-                                        <Pressable style={styles.DesignButton}>
+                                        <TouchableOpacity
+                                            style={styles.DesignButton}
+                                            onPress={() => {
+                                            // @ts-ignore
+                                                this.RBSheet.open()
+                                        }}>
                                             <Text style={customStyles.btnText}>
                                                 {'필터링 버튼'}
                                             </Text>
-                                        </Pressable>
+                                        </TouchableOpacity>
+                                        <RBSheet
+                                            ref={ref => {
+                                                // @ts-ignore
+                                                this.RBSheet = ref;
+                                            }}
+                                            height={300}
+                                            openDuration={250}
+                                            customStyles={{
+                                                container: {
+                                                    justifyContent: "center",
+                                                    alignItems: "center"
+                                                }
+                                            }}
+                                        >
+                                            <Text>{'안녕'}</Text>
+                                        </RBSheet>
                                     </View>
                                 </View>
                             );
@@ -303,3 +333,45 @@ const pickerSelectStyles = StyleSheet.create({
     },
 
 });
+
+
+
+// 모달에 필요한 것들
+const items: certifications[] = [
+    {
+        name: '토익(TOEIC)',
+        normalStartDate: '2023-02-05',
+        normalEndDate: '2023-02-12',
+        extraStartDate: '2023-02-13',
+        extraEndDate: '2023-02-17',
+        examDate: '2023-02-19',
+        resultDate: '2023-02-26',
+    },
+    {
+        name: '3D프린터개발산업기사',
+        normalStartDate: '2023-03-28',
+        normalEndDate: '2023-04-03',
+        extraStartDate: '2023-04-07',
+        extraEndDate: '2023-04-12',
+        examDate: '2023-04-20',
+        resultDate: '2023-04-22',
+    },
+    {
+        name: '가스기능사',
+        normalStartDate: '2023-02-09',
+        normalEndDate: '2023-02-13',
+        extraStartDate: '2023-04-07',
+        extraEndDate: '2023-04-12',
+        examDate: '2023-04-20',
+        resultDate: '2023-04-22',
+    },
+    {
+        name: '토플(TOPLE)',
+        normalStartDate: '2023-02-10',
+        normalEndDate: '2023-02-16',
+        extraStartDate: '2023-02-22',
+        extraEndDate: '2023-02-26',
+        examDate: '2023-02-30',
+        resultDate: '2023-03-22',
+    },
+]

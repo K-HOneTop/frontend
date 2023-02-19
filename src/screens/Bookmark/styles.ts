@@ -41,6 +41,7 @@ export const styles = StyleSheet.create({
     cardArea:{
         flex:582,//618 -> 103 -> 10
         backgroundColor: 'orange',
+
     },
 
 

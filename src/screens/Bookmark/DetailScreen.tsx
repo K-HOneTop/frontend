@@ -59,6 +59,9 @@ const customStyle = StyleSheet.create({
         paddingRight:20,
         paddingLeft:20,
         paddingTop:12,
+
+        justifyContent: "center",
+        alignItems: 'center'
     },
 
     //card

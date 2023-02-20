@@ -16,6 +16,8 @@ import HomeScreen from "./src/screens/home/index";
 
 //import bookmark screens
 import BookmarkScreen from "./src/screens/Bookmark/index";
+import BookmarkDetailScreen from "./src/screens/Bookmark/DetailScreen";
+import CertificationUpdateScreen from "./src/screens/Bookmark/CertificationUpdateScreen";
 
 //import types
 import { UsersStackParamList } from "./src/types/stacks/UserStackTypes";
@@ -37,6 +39,16 @@ const App = () => {
               name="Main"
               component={BookmarkScreen}
               options={{ headerShown: false }}
+          />
+          <bookmarkStack.Screen
+                name="Detail"
+                component={BookmarkDetailScreen}
+                options={{ headerShown: true }}
+          />
+          <bookmarkStack.Screen
+              name="CertificationUpdate"
+              component={CertificationUpdateScreen}
+              options={{ headerShown: true }}
           />
         </bookmarkStack.Group>
       </bookmarkStack.Navigator>

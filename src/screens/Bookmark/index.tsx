@@ -26,9 +26,12 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
 
 
 
-    const onPressDetailCard = (isDetail: boolean) => {
+    const onPressDetailCard = (isDetail: boolean, type:string) => {
         if(isDetail) {
             navigation.navigate('Detail')
+        }
+        if(type==="직접추가"){
+            navigation.navigate('CertificationUpdate')
         }
     }
 
@@ -85,7 +88,7 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                                 <ScrollView>
                                 <View style={customStyles.cardView}>
                                     {bookmarks.map(card => (
-                                        <TouchableOpacity onPress={()=>onPressDetailCard(card.isDetail)}>
+                                        <TouchableOpacity onPress={()=>onPressDetailCard(card.isDetail, card.tag)}>
                                         <View style={customStyles.cards}>
                                             <View style={{flexDirection: "row", marginBottom: 8}}>
                                                 <View>
@@ -317,7 +320,7 @@ const bookmarks:bookmarkType[] = [
         institution : '한국진흥원',
         tag: '직접추가',
         leftDay: 36,
-        isDetail:true,
+        isDetail:false,
     },
     {
         id: 5,

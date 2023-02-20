@@ -25,7 +25,13 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
     const [sort, setSort] = useState();
 
 
-    const [selectedLanguage, setSelectedLanguage] = useState();
+
+    const onPressDetailCard = (isDetail: boolean) => {
+        if(isDetail) {
+            navigation.navigate('Detail')
+        }
+    }
+
 
     return (
         <View style={styles.container}>
@@ -79,7 +85,7 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                                 <ScrollView>
                                 <View style={customStyles.cardView}>
                                     {bookmarks.map(card => (
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={()=>onPressDetailCard(card.isDetail)}>
                                         <View style={customStyles.cards}>
                                             <View style={{flexDirection: "row", marginBottom: 8}}>
                                                 <View>

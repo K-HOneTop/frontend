@@ -6,6 +6,10 @@ import RNPickerSelect from 'react-native-picker-select'; //버전 낮아서 pick
 
 import StarIcon from './components/StarIcon';
 
+
+import bookmarkType from "../../types/bookmarks/bookmarkTypes"
+
+
 //stack import
 import { BookmarkStackParamList } from "../../types/stacks/BookmarkStackTypes";
 
@@ -13,6 +17,8 @@ export type BookmarkScreenProps = StackScreenProps<BookmarkStackParamList, "Main
 
 //design 관련
 import {styles} from './styles';
+import DdayCounter from "./components/DdayCounter";
+import StatusTag from "./components/StatusTag";
 
 const Bookmark = ({ navigation }: BookmarkScreenProps) => {
     const [resultNum, setResultNum] = useState<number>(6);
@@ -75,8 +81,21 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                                     {bookmarks.map(card => (
                                         <TouchableOpacity>
                                         <View style={customStyles.cards}>
-                                            <Text style={customStyles.cardTitleTxt}>{card.title}</Text>
-                                            <Text style={customStyles.institutionTxt}>{card.institution}</Text>
+                                            <View style={{flexDirection: "row", marginBottom: 8}}>
+                                                <View>
+                                                    {card.leftDay >= 0 ? (<DdayCounter day={card.leftDay} type={card.tag}/>):(<View/>)}
+                                                </View>
+                                                <View>
+                                                    <StatusTag type={card.tag}/>
+                                                </View>
+                                            </View>
+                                            <View style={{marginBottom:2, flexDirection:"row", alignItems: "center"}}>
+                                                <Text style={[customStyles.cardTitleTxt,{flex:9}]}>{card.title}</Text>
+                                                {card.isDetail ? (<Image style={{flex:1}} source={require('../../assets/images/next.png')}/>):(<Image style={{flex:1}} source={require('../../assets/images/next_invisible.png')}/>)}
+                                            </View>
+                                            <View>
+                                                <Text style={customStyles.institutionTxt}>{card.institution}</Text>
+                                            </View>
                                         </View>
                                         <View>
                                             <StarIcon selected={true}/>
@@ -221,7 +240,7 @@ const customStyles = StyleSheet.create({
         fontWeight: "500"
     },
     institutionTxt:{
-        color: "#141414",
+        color: "#8C8C8C",
         fontSize: 13,
         fontWeight: "400"
     },
@@ -252,7 +271,7 @@ const pickerSelectStyles = StyleSheet.create({
 });
 
 
-const bookmarks = [
+const bookmarks:bookmarkType[] = [
 
     {
         id: 0,
@@ -260,6 +279,7 @@ const bookmarks = [
         institution : '한국진흥원',
         tag: '정기접수중',
         leftDay: 3,
+        isDetail:true,
     },
     {
         id: 1,
@@ -267,6 +287,7 @@ const bookmarks = [
         institution : '한국진흥원',
         tag: '정기접수중',
         leftDay: 0,
+        isDetail:true,
     },
     {
         id: 2,
@@ -274,27 +295,31 @@ const bookmarks = [
         institution : '한국진흥원',
         tag: '추가접수중',
         leftDay: 3,
+        isDetail:true,
     },
     {
         id: 3,
-        title : '토익(TOEIC)',
-        institution : '한국진흥원',
-        tag: '접수예정',
-        leftDay: -1,
-    },
-    {
-        id: 4,
-        title : '토익(TOEIC)',
-        institution : '한국진흥원',
-        tag: '접수예정',
-        leftDay: -1,
-    },
-    {
-        id: 5,
-        title : '토익(TOEIC)',
+        title : '회차없는시험',
         institution : '한국진흥원',
         tag: '접수마감',
         leftDay: -1,
+        isDetail:false,
+    },
+    {
+        id: 4,
+        title : '토익(TOEIC)',
+        institution : '한국진흥원',
+        tag: '직접추가',
+        leftDay: 36,
+        isDetail:true,
+    },
+    {
+        id: 5,
+        title : '회차없는시험',
+        institution : '한국진흥원',
+        tag: '직접추가',
+        leftDay: -1,
+        isDetail:false,
     },
     {
         id: 4,
@@ -302,6 +327,7 @@ const bookmarks = [
         institution : '한국진흥원',
         tag: '접수예정',
         leftDay: -1,
+        isDetail:true,
     },
 
 

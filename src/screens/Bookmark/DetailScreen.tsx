@@ -96,7 +96,7 @@ const customStyle = StyleSheet.create({
 
     //extra정보 문구
     extraTxt:{
-        color: "#222222",
+        color: "#8C8C8C",
         fontWeight:"400",
         fontSize:13,
         lineHeight:18.2,

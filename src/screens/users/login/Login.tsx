@@ -77,9 +77,11 @@ const Login = ({ navigation }: LoginScreenProps) => {
               <Text style={styles.noIDMsg}>일치하는 정보가 없습니다</Text>
             </View>
           ) : null}
-          <TouchableOpacity>
-            <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>
-          </TouchableOpacity>
+          <View style={styles.userInputAreaContainer}>
+            <TouchableOpacity>
+              <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.midArea}></View>
@@ -128,7 +130,7 @@ const styles = StyleSheet.create({
     height: 52,
     backgroundColor: "#F3F3F3",
     borderRadius: 6,
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "400",
     marginTop: 16,
   },
@@ -138,12 +140,14 @@ const styles = StyleSheet.create({
     height: 52,
     backgroundColor: "#F3F3F3",
     borderRadius: 6,
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "400",
     marginTop: 8,
   },
 
-  noIDMsgBox: { alignContent: "flex-start" },
+  noIDMsgBox: {
+    alignItems: "flex-start",
+  },
 
   noIDMsg: {
     marginTop: 8,

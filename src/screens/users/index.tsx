@@ -12,7 +12,8 @@ const Users = ({ navigation }: SplashScreenProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
-        <View style={styles.logoArea}></View>
+        {/*<View style={styles.logoArea}></View>*/}
+        {/* 로고 자리 */}
       </View>
       <View style={styles.midArea}>
         <View style={styles.intro}>
@@ -20,24 +21,24 @@ const Users = ({ navigation }: SplashScreenProps) => {
             <Text style={styles.welcomeIntroOne}>취뽀의 자격을 </Text>
             <Text style={styles.welcomeIntroTwo}>시작해보세요</Text>
           </View>
-          <Text style={styles.introTwo}>취뽀의 자격에서 자격증을</Text>
+          <Text style={styles.introTwo}>막막하고 복잡한 취업 준비,</Text>
           <Text style={styles.introTwo}>
-            뭐시기 저시기 뭐시기 저시기해보세요!
+            자격증은 취뽀의 자격이 도와드릴게요
           </Text>
         </View>
       </View>
       <View style={styles.btmArea}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Email")}
-          style={styles.signInBtnBox}
-        >
-          <Text style={styles.signInText}>가입하기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={() => navigation.navigate("Login")}
           style={styles.logInBtnBox}
         >
-          <Text style={styles.logInText}>로그인하기</Text>
+          <Text style={styles.logInText}>이메일로 로그인하기</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Email")}
+          style={styles.signInBtnBox}
+        >
+          <Text style={styles.signInText}>회원가입</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -78,22 +79,23 @@ const styles = StyleSheet.create({
   },
   welcomeIntro: {
     flexDirection: "row",
-    marginBottom: 10,
+    marginBottom: 15,
   },
   welcomeIntroOne: {
+    color: "#F56C3B",
+    fontWeight: "600",
     fontSize: 20,
-    color: "#ADADAD",
-    fontWeight: "700",
   },
   welcomeIntroTwo: {
     fontSize: 20,
     color: "#222222",
-    fontWeight: "700",
+    fontWeight: "600",
   },
 
   introTwo: {
     fontSize: 18,
     fontWeight: "400",
+    color: "#8C8C8C",
   },
 
   btmArea: {
@@ -102,36 +104,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //backgroundColor: "pink",
   },
-
-  signInBtnBox: {
-    backgroundColor: "#222222",
-    width: 335,
-    height: 52,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 6,
-    marginBottom: 10,
-  },
-
-  signInText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "600",
-  },
-
   logInBtnBox: {
-    backgroundColor: "#868686",
+    backgroundColor: "#F56C3B",
     width: 335,
     height: 52,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 6,
     marginTop: 6,
+    marginBottom: 8,
   },
 
   logInText: {
     color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "500",
+  },
+
+  signInBtnBox: {
+    backgroundColor: "#FEF0EB",
+    width: 335,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6,
+  },
+
+  signInText: {
+    color: "#F56C3B",
+    fontSize: 16,
+    fontWeight: "500",
   },
 });

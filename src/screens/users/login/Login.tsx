@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
@@ -19,18 +19,24 @@ const Login = ({ navigation }: LoginScreenProps) => {
   const [userPW, setUserPW] = useState<string>("");
 
   const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
+  const [errorLogin, setErrorLogin] = useState(false); //로그인 정보 틀렸을 때
 
   //로그인 API 연결
   const loginBtnClick = async () => {
-    if (userEmail === "" || userPW === "") {
-      Alert.alert("안내", "빈 칸을 모두 입력해주세요.");
-    } else {
-      const response = await userService.SignIn(userEmail, userPW);
-      console.log(response);
-      if (response == 200) navigation.navigate("Home");
-      else Alert.alert("안내", "로그인 정보를 다시 입력해주세요.");
-    }
+    const response = await userService.SignIn(userEmail, userPW);
+    console.log(response);
+    if (response == 200) navigation.navigate("Home");
+    else setErrorLogin(true);
   };
+
+  //입력창 상태 관리
+  const [btnDisableState, setbtnDisableState] = useState(true);
+  useEffect(() => {
+    let btnClickAble = userEmail.length && userPW.length;
+    if (btnClickAble > 0)
+      setbtnDisableState(false); //둘다 길이 1이상이어야만 disable 해제
+    else setbtnDisableState(true);
+  }, [userEmail, userPW]);
 
   return (
     <View style={styles.container}>
@@ -39,6 +45,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
         <View style={styles.userInputAreaContainer}>
           <TextInput
             style={styles.emailInputBox}
+            outlineColor={errorLogin ? "#F56C3B" : "none"}
             placeholder="이메일"
             placeholderTextColor="#ADADAD"
             onChangeText={(userEmail) => setUserEmail(userEmail)}
@@ -49,6 +56,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
           <View>
             <TextInput
               style={styles.passwordInputBox}
+              outlineColor={errorLogin ? "#F56C3B" : "none"}
               secureTextEntry={!pwVisible}
               placeholder="비밀번호"
               placeholderTextColor="#ADADAD"
@@ -64,6 +72,11 @@ const Login = ({ navigation }: LoginScreenProps) => {
               }
             />
           </View>
+          {errorLogin ? (
+            <View style={styles.noIDMsgBox}>
+              <Text style={styles.noIDMsg}>일치하는 정보가 없습니다</Text>
+            </View>
+          ) : null}
           <TouchableOpacity>
             <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>
           </TouchableOpacity>
@@ -71,7 +84,13 @@ const Login = ({ navigation }: LoginScreenProps) => {
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity style={styles.loginBtnBox} onPress={loginBtnClick}>
+        <TouchableOpacity
+          style={
+            btnDisableState ? styles.loginDisableBtnBox : styles.loginBtnBox
+          }
+          onPress={loginBtnClick}
+          disabled={btnDisableState}
+        >
           <Text style={styles.loginText}>로그인하기</Text>
         </TouchableOpacity>
       </View>
@@ -109,7 +128,6 @@ const styles = StyleSheet.create({
     height: 52,
     backgroundColor: "#F3F3F3",
     borderRadius: 6,
-    borderColor: "#F3F3F3",
     fontSize: 17,
     fontWeight: "400",
     marginTop: 16,
@@ -120,18 +138,25 @@ const styles = StyleSheet.create({
     height: 52,
     backgroundColor: "#F3F3F3",
     borderRadius: 6,
-    borderColor: "#F3F3F3",
     fontSize: 17,
     fontWeight: "400",
     marginTop: 8,
   },
 
-  forgotPWNotice: {
-    fontSize: 14,
-    fontWeight: "400",
-    textDecorationLine: "underline",
+  noIDMsgBox: { alignContent: "flex-start" },
+
+  noIDMsg: {
     marginTop: 8,
-    color: "#ADADAD",
+    color: "#F56C3B",
+    fontSize: 12,
+    fontWeight: "400",
+  },
+
+  forgotPWNotice: {
+    fontSize: 13,
+    fontWeight: "400",
+    marginTop: 8,
+    color: "#8C8C8C",
   },
 
   midArea: {
@@ -147,9 +172,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //backgroundColor: "pink",
   },
+  loginDisableBtnBox: {
+    backgroundColor: "#E9E9E9",
+    width: 335,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6,
+    marginBottom: 50,
+  },
 
   loginBtnBox: {
-    backgroundColor: "#222222",
+    backgroundColor: "#F56C3B",
     width: 335,
     height: 52,
     justifyContent: "center",
@@ -161,6 +195,6 @@ const styles = StyleSheet.create({
   loginText: {
     color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "400",
   },
 });

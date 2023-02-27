@@ -79,6 +79,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
               <Text style={styles.noIDMsg}>일치하는 정보가 없습니다</Text>
             </View>
           ) : null}
+
           <View style={styles.forgetPWArea}>
             <TouchableOpacity onPress={() => navigation.navigate("FindPW")}>
               <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>

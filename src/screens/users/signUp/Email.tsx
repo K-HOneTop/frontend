@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -19,16 +19,26 @@ export type EmailScreenProps = StackScreenProps<UsersStackParamList, "Email">;
 
 const Email = ({ navigation }: EmailScreenProps) => {
   const [email, setEmail] = useState<string>("");
+  const [error, setErrorCode] = useState(false);
 
   //이메일 전달 API
   const nextBtnClick = () => {
-    if (email === "") {
-      Alert.alert("안내", "이메일을 입력하세요.");
-    } else {
-      userServices.Email(email);
+    if (email.includes("@") == true) {
+      setErrorCode(false);
+      //userServices.Email(email);
       navigation.navigate("AuthCode");
+    } else {
+      setErrorCode(true);
     }
   };
+
+  //입력창 상태 관리
+  const [btnDisableState, setbtnDisableState] = useState(true);
+  useEffect(() => {
+    let btnClickAble = email.length;
+    if (btnClickAble > 0) setbtnDisableState(false);
+    else setbtnDisableState(true);
+  }, [email]);
 
   return (
     <View style={styles.container}>
@@ -36,12 +46,18 @@ const Email = ({ navigation }: EmailScreenProps) => {
         <Text style={styles.notice}>이메일을 입력해주세요</Text>
         <View style={styles.inputAreaContainer}>
           <TextInput
+            textContentType="emailAddress"
             selectionColor="black"
-            style={styles.emailInputBox}
-            placeholder="empty@gmail.com"
+            style={error ? styles.errorEmailInputBox : styles.emailInputBox}
+            placeholder="이메일"
             placeholderTextColor="#ADADAD"
             onChangeText={(email) => setEmail(email)}
           />
+          {error ? (
+            <View style={styles.noIDMsgBox}>
+              <Text style={styles.noIDMsg}>이메일을 정확히 입력해주세요</Text>
+            </View>
+          ) : null}
           <TouchableOpacity>
             <Text style={styles.personalInfoNotice}>
               개인정보 보호 정책 보기
@@ -51,7 +67,11 @@ const Email = ({ navigation }: EmailScreenProps) => {
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity onPress={nextBtnClick} style={styles.nextBtnBox}>
+        <TouchableOpacity
+          disabled={btnDisableState}
+          onPress={nextBtnClick}
+          style={btnDisableState ? styles.nextDisableBtnBox : styles.nextBtnBox}
+        >
           <Text style={styles.nextText}>다음</Text>
         </TouchableOpacity>
       </View>
@@ -83,7 +103,18 @@ const styles = StyleSheet.create({
   inputAreaContainer: {
     alignItems: "center",
   },
-
+  errorEmailInputBox: {
+    width: 335,
+    height: 52,
+    backgroundColor: "#F3F3F3",
+    borderRadius: 6,
+    borderColor: "#F56C3B",
+    borderWidth: 1,
+    fontSize: 17,
+    fontWeight: "400",
+    marginTop: 16,
+    paddingLeft: 16,
+  },
   emailInputBox: {
     width: 335,
     height: 52,
@@ -96,10 +127,24 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
 
-  personalInfoNotice: {
-    fontSize: 14,
+  noIDMsgBox: {
+    width: 335,
+    height: 25,
+    //backgroundColor: "pink",
+    alignItems: "flex-start",
+  },
+
+  noIDMsg: {
+    marginTop: 8,
+    color: "#F56C3B",
+    fontSize: 12,
     fontWeight: "400",
-    textDecorationLine: "underline",
+    paddingLeft: 3,
+  },
+
+  personalInfoNotice: {
+    fontSize: 13,
+    fontWeight: "400",
     marginTop: 8,
     color: "#ADADAD",
   },
@@ -118,8 +163,18 @@ const styles = StyleSheet.create({
     //backgroundColor: "pink",
   },
 
+  nextDisableBtnBox: {
+    backgroundColor: "#E9E9E9",
+    width: 335,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6,
+    marginBottom: 50,
+  },
+
   nextBtnBox: {
-    backgroundColor: "#222222",
+    backgroundColor: "#F56C3B",
     width: 335,
     height: 52,
     justifyContent: "center",
@@ -131,5 +186,6 @@ const styles = StyleSheet.create({
   nextText: {
     color: "#FFFFFF",
     fontSize: 16,
+    fontWeight: "400",
   },
 });

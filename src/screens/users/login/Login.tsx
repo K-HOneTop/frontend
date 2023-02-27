@@ -23,10 +23,11 @@ const Login = ({ navigation }: LoginScreenProps) => {
 
   //로그인 API 연결
   const loginBtnClick = async () => {
-    const response = await userService.SignIn(userEmail, userPW);
+    /*const response = await userService.SignIn(userEmail, userPW);
     console.log(response);
     if (response == 200) navigation.navigate("Home");
-    else setErrorLogin(true);
+    else setErrorLogin(true);*/
+    navigation.navigate("Home");
   };
 
   //입력창 상태 관리
@@ -78,7 +79,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
             </View>
           ) : null}
           <View style={styles.userInputAreaContainer}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("FindPW")}>
               <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>
             </TouchableOpacity>
           </View>

@@ -62,14 +62,13 @@ const App = () => {
           <usersStack.Screen
             name="FindPW"
             component={FindPWScreen}
-            options={{ headerShown: false }}
+            options={{ title: "", headerShown: true }}
           />
           <usersStack.Screen
             name="GoToLogin"
             component={GoToLoginScreen}
-            options={{ headerShown: false }}
+            options={{ title: "", headerShown: true }}
           />
-
           <homeStack.Screen
             name="Home"
             component={HomeScreen}

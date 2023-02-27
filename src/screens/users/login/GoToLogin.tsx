@@ -18,7 +18,11 @@ export type GoToLoginScreenProps = StackScreenProps<
 >;
 
 const GoToLogin = ({ navigation }: GoToLoginScreenProps) => {
-  return <View></View>;
+  return (
+    <View>
+      <Text>임시 비밀번호 발송 완료</Text>
+    </View>
+  );
 };
 
 export default GoToLogin;

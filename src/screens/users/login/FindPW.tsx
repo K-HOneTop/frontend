@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -20,17 +20,23 @@ export type FindPWScreenProps = StackScreenProps<UsersStackParamList, "FindPW">;
 const FindPW = ({ navigation }: FindPWScreenProps) => {
   const [email, setEmail] = useState<string>("");
 
+  //입력창 상태 관리
+  const [btnDisableState, setbtnDisableState] = useState(true);
+  useEffect(() => {
+    let btnClickAble = email.length;
+    if (btnClickAble > 0) setbtnDisableState(false);
+    else setbtnDisableState(true);
+  }, [email]);
+
   //인증코드 전송 API 연결
+  const [errorCode, setErrorCode] = useState(false);
   const nextBtnLogin = async () => {
-    if (email === "") {
-      Alert.alert("안내", "인증코드를 입력하세요.");
-    } else {
-      const response = await userServices.FindPassWord(email);
-      console.log(response);
-      if (response == 200) {
-        navigation.navigate("Login");
-      } else Alert.alert("안내", "인증번호를 다시 입력하세요.");
-    }
+    /*const response = await userServices.FindPassWord(email);
+    console.log(response);
+    if (response == 200) {
+      navigation.navigate("Login");
+    } else setErrorCode(true);*/
+    navigation.navigate("GoToLogin");
   };
 
   return (
@@ -46,10 +52,19 @@ const FindPW = ({ navigation }: FindPWScreenProps) => {
             onChangeText={(email) => setEmail(email)}
           />
         </View>
+        {errorCode ? (
+          <View style={styles.noEmailBox}>
+            <Text style={styles.noEmailMsg}>일치하는 이메일이 없습니다</Text>
+          </View>
+        ) : null}
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity onPress={nextBtnLogin} style={styles.nextBtnBox}>
+        <TouchableOpacity
+          disabled={btnDisableState}
+          onPress={nextBtnLogin}
+          style={btnDisableState ? styles.nextDisableBtnBox : styles.nextBtnBox}
+        >
           <Text style={styles.nextText}>다음</Text>
         </TouchableOpacity>
       </View>
@@ -94,6 +109,17 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
 
+  noEmailBox: {
+    alignItems: "flex-start",
+  },
+
+  noEmailMsg: {
+    marginTop: 8,
+    color: "#F56C3B",
+    fontSize: 12,
+    fontWeight: "400",
+  },
+
   midArea: {
     flex: 0.3,
     justifyContent: "flex-end",
@@ -108,8 +134,18 @@ const styles = StyleSheet.create({
     //backgroundColor: "pink",
   },
 
+  nextDisableBtnBox: {
+    backgroundColor: "#E9E9E9",
+    width: 335,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6,
+    marginBottom: 50,
+  },
+
   nextBtnBox: {
-    backgroundColor: "#222222",
+    backgroundColor: "#F56C3B",
     width: 335,
     height: 52,
     justifyContent: "center",
@@ -121,5 +157,6 @@ const styles = StyleSheet.create({
   nextText: {
     color: "#FFFFFF",
     fontSize: 16,
+    fontWeight: "400",
   },
 });

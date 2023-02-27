@@ -23,13 +23,16 @@ const Welcome = ({ navigation }: WelcomeScreenProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
-        <View style={styles.logoArea}></View>
+        {/*<View style={styles.logoArea}></View>*/}
       </View>
       <View style={styles.midArea}>
         <View style={styles.intro}>
           <View style={styles.welcomeIntro}>
-            <Text style={styles.welcomeIntroOne}>취뽀의 자격을 </Text>
-            <Text style={styles.welcomeIntroTwo}>시작해보세요</Text>
+            <View style={styles.welcomeIntroOneBox}>
+              <Text style={styles.welcomeIntroOne}>취뽀의 자격</Text>
+              <Text style={styles.welcomeIntroOneSub}>에</Text>
+            </View>
+            <Text style={styles.welcomeIntroTwo}>오신 걸 환영합니다.</Text>
           </View>
           <Text style={styles.introTwo}>취뽀의 자격에서 자격증을</Text>
           <Text style={styles.introTwo}>
@@ -42,7 +45,7 @@ const Welcome = ({ navigation }: WelcomeScreenProps) => {
           onPress={() => navigation.navigate("Login")}
           style={styles.logInBtnBox}
         >
-          <Text style={styles.logInText}>로그인하기</Text>
+          <Text style={styles.logInText}>완료</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -82,14 +85,26 @@ const styles = StyleSheet.create({
   },
 
   welcomeIntro: {
-    flexDirection: "row",
+    flexDirection: "column",
     marginBottom: 10,
+    alignItems: "center",
   },
+
+  welcomeIntroOneBox: {
+    flexDirection: "row",
+  },
+
   welcomeIntroOne: {
     fontSize: 20,
-    color: "#ADADAD",
+    color: "#F56C3B",
     fontWeight: "700",
   },
+  welcomeIntroOneSub: {
+    fontSize: 20,
+    color: "#222222",
+    fontWeight: "700",
+  },
+
   welcomeIntroTwo: {
     fontSize: 20,
     color: "#222222",
@@ -97,7 +112,9 @@ const styles = StyleSheet.create({
   },
 
   introTwo: {
-    fontSize: 18,
+    color: "#ADADAD",
+    fontWeight: "400",
+    fontSize: 15,
   },
 
   btmArea: {
@@ -107,7 +124,7 @@ const styles = StyleSheet.create({
     //backgroundColor: "pink",
   },
   logInBtnBox: {
-    backgroundColor: "#222222",
+    backgroundColor: "#F56C3B",
     width: 335,
     height: 52,
     justifyContent: "center",
@@ -119,6 +136,6 @@ const styles = StyleSheet.create({
   logInText: {
     color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "400",
   },
 });

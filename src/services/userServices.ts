@@ -42,8 +42,8 @@ class userServices {
   async Email(email: string) {
     emailDataString = email;
     try {
-      const response = await axios.get(
-        `${SERVER_URL}/mail?rcv=${emailDataString}`
+      const response = await axios.post(
+        `${SERVER_URL}/member/signup/${emailDataString}`
       );
       console.log(response);
       return response;

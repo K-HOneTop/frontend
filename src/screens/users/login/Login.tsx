@@ -49,7 +49,6 @@ const Login = ({ navigation }: LoginScreenProps) => {
             style={styles.emailInputBox}
             outlineColor={errorLogin ? "#F56C3B" : "white"}
             selectionColor="black"
-            activeOutlineColor="white"
             placeholder="이메일"
             placeholderTextColor="#ADADAD"
             onChangeText={(userEmail) => setUserEmail(userEmail)}

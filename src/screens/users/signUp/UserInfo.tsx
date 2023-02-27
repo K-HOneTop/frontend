@@ -56,7 +56,10 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
   const nickNameCheck = async () => {
     const nickNameResponse = await userService.NickNameCheck(nickName);
     if (nickNameResponse == 200) setErrorNickName(0); //올바른 닉네임
-    else setErrorNickName(3); //중복된 닉네임
+    else {
+      if (nickName.length == 0) setErrorNickName(1);
+      else setErrorNickName(3); //중복된 닉네임
+    }
   };
 
   useEffect(() => {

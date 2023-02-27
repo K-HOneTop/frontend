@@ -29,7 +29,7 @@ const FindPW = ({ navigation }: FindPWScreenProps) => {
   }, [email]);
 
   //인증코드 전송 API 연결
-  const [errorCode, setErrorCode] = useState(true);
+  const [errorCode, setErrorCode] = useState(false);
   const nextBtnLogin = async () => {
     const response = await userServices.FindPassWord(email);
     console.log(response);

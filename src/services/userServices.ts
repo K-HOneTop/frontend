@@ -29,6 +29,7 @@ class userServices {
 
   //비밀번호 찾기
   async FindPassWord(email: string) {
+    console.log(`${SERVER_URL}/member/password/${email}`);
     try {
       const response = await axios.get(
         `${SERVER_URL}/member/password/${email}`
@@ -43,6 +44,7 @@ class userServices {
   //이메일(중복체크)
   async Email(email: string) {
     emailDataString = email;
+    console.log(`${SERVER_URL}/member/signup/${emailDataString}`);
     try {
       const response = await axios.post(
         `${SERVER_URL}/member/signup/${emailDataString}`

@@ -15,43 +15,41 @@ import userServices from "../../../services/userServices";
 import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 
 //Export type
-export type EmailScreenProps = StackScreenProps<UsersStackParamList, "Email">;
+export type FindPWScreenProps = StackScreenProps<UsersStackParamList, "FindPW">;
 
-const Email = ({ navigation }: EmailScreenProps) => {
+const FindPW = ({ navigation }: FindPWScreenProps) => {
   const [email, setEmail] = useState<string>("");
 
-  //이메일 전달 API
-  const nextBtnClick = () => {
+  //인증코드 전송 API 연결
+  const nextBtnLogin = async () => {
     if (email === "") {
-      Alert.alert("안내", "이메일을 입력하세요.");
+      Alert.alert("안내", "인증코드를 입력하세요.");
     } else {
-      userServices.Email(email);
-      navigation.navigate("AuthCode");
+      const response = await userServices.FindPassWord(email);
+      console.log(response);
+      if (response == 200) {
+        navigation.navigate("Login");
+      } else Alert.alert("안내", "인증번호를 다시 입력하세요.");
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
-        <Text style={styles.notice}>이메일을 입력해주세요</Text>
+        <Text style={styles.notice}>비밀번호를 잊으셨나요?</Text>
         <View style={styles.inputAreaContainer}>
           <TextInput
             selectionColor="black"
+            placeholder="이메일"
             style={styles.emailInputBox}
-            placeholder="empty@gmail.com"
             placeholderTextColor="#ADADAD"
             onChangeText={(email) => setEmail(email)}
           />
-          <TouchableOpacity>
-            <Text style={styles.personalInfoNotice}>
-              개인정보 보호 정책 보기
-            </Text>
-          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity onPress={nextBtnClick} style={styles.nextBtnBox}>
+        <TouchableOpacity onPress={nextBtnLogin} style={styles.nextBtnBox}>
           <Text style={styles.nextText}>다음</Text>
         </TouchableOpacity>
       </View>
@@ -59,7 +57,7 @@ const Email = ({ navigation }: EmailScreenProps) => {
   );
 };
 
-export default Email;
+export default FindPW;
 
 const styles = StyleSheet.create({
   container: {
@@ -94,14 +92,6 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     marginTop: 16,
     paddingLeft: 16,
-  },
-
-  personalInfoNotice: {
-    fontSize: 14,
-    fontWeight: "400",
-    textDecorationLine: "underline",
-    marginTop: 8,
-    color: "#ADADAD",
   },
 
   midArea: {

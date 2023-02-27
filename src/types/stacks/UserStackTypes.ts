@@ -12,4 +12,6 @@ export type UsersStackParamList = {
     userPW: string;
   };
   Welcome: undefined;
+  FindPW: undefined;
+  GoToLogin: undefined;
 };

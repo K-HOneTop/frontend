@@ -27,16 +27,26 @@ class userServices {
     }
   }
 
+  //비밀번호 찾기
+  async FindPassWord(email: string) {
+    const emailString = email;
+    try {
+      const response = await axios.get(`${SERVER_URL}/mail?rcv=${email}`);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   //이메일
   async Email(email: string) {
     emailDataString = email;
-    //const URL = SERVER_URL + "/mail?rcv=" + emailDataString;
-    //console.log(URL);
     try {
       const response = await axios.get(
         `${SERVER_URL}/mail?rcv=${emailDataString}`
       );
       console.log(response);
+      return response;
     } catch (error) {
       console.log(error);
     }

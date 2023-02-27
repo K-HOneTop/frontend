@@ -9,6 +9,8 @@ import EmailScreen from "./src/screens/users/signUp/Email";
 import UserInfoScreen from "./src/screens/users/signUp/UserInfo";
 import LoginScreen from "./src/screens/users/login/Login";
 import WelcomeScreen from "./src/screens/users/signUp/Welcome";
+import FindPWScreen from "./src/screens/users/login/FindPW";
+import GoToLoginScreen from "./src/screens/users/login/GoToLogin";
 
 //import home screens
 import HomeScreen from "./src/screens/home/index";
@@ -57,6 +59,17 @@ const App = () => {
             component={WelcomeScreen}
             options={{ headerShown: false }}
           />
+          <usersStack.Screen
+            name="FindPW"
+            component={FindPWScreen}
+            options={{ headerShown: false }}
+          />
+          <usersStack.Screen
+            name="GoToLogin"
+            component={GoToLoginScreen}
+            options={{ headerShown: false }}
+          />
+
           <homeStack.Screen
             name="Home"
             component={HomeScreen}

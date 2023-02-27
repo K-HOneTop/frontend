@@ -29,7 +29,7 @@ const FindPW = ({ navigation }: FindPWScreenProps) => {
   }, [email]);
 
   //인증코드 전송 API 연결
-  const [errorCode, setErrorCode] = useState(false);
+  const [errorCode, setErrorCode] = useState(true);
   const nextBtnLogin = async () => {
     /*const response = await userServices.FindPassWord(email);
     console.log(response);
@@ -47,7 +47,7 @@ const FindPW = ({ navigation }: FindPWScreenProps) => {
           <TextInput
             selectionColor="black"
             placeholder="이메일"
-            style={styles.emailInputBox}
+            style={errorCode ? styles.errorEmailInputBox : styles.emailInputBox}
             placeholderTextColor="#ADADAD"
             onChangeText={(email) => setEmail(email)}
           />
@@ -109,8 +109,22 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
 
+  errorEmailInputBox: {
+    width: 335,
+    height: 52,
+    backgroundColor: "#F3F3F3",
+    borderRadius: 6,
+    borderColor: "#F56C3B",
+    borderWidth: 1,
+    fontSize: 17,
+    fontWeight: "400",
+    marginTop: 16,
+    paddingLeft: 16,
+  },
+
   noEmailBox: {
     alignItems: "flex-start",
+    paddingLeft: 16,
   },
 
   noEmailMsg: {

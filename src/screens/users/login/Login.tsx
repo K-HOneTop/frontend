@@ -19,7 +19,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
   const [userPW, setUserPW] = useState<string>("");
 
   const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
-  const [errorLogin, setErrorLogin] = useState(false); //로그인 정보 틀렸을 때
+  const [errorLogin, setErrorLogin] = useState(true); //로그인 정보 틀렸을 때
 
   //로그인 API 연결
   const loginBtnClick = async () => {
@@ -45,26 +45,26 @@ const Login = ({ navigation }: LoginScreenProps) => {
         <Text style={styles.notice}>로그인하기</Text>
         <View style={styles.userInputAreaContainer}>
           <TextInput
+            mode="outlined"
             style={styles.emailInputBox}
-            outlineColor={errorLogin ? "#F56C3B" : "none"}
+            outlineColor={errorLogin ? "#F56C3B" : "white"}
+            selectionColor="black"
+            activeOutlineColor="white"
             placeholder="이메일"
             placeholderTextColor="#ADADAD"
             onChangeText={(userEmail) => setUserEmail(userEmail)}
-            underlineColor="white"
-            activeUnderlineColor="white"
-            selectionColor="black"
           />
           <View>
             <TextInput
               style={styles.passwordInputBox}
-              outlineColor={errorLogin ? "#F56C3B" : "none"}
+              mode="outlined"
+              outlineColor={errorLogin ? "#F56C3B" : "white"}
+              activeOutlineColor="white"
+              selectionColor="black"
               secureTextEntry={!pwVisible}
               placeholder="비밀번호"
               placeholderTextColor="#ADADAD"
               onChangeText={(userPW) => setUserPW(userPW)}
-              underlineColor="white"
-              activeUnderlineColor="white"
-              selectionColor="black"
               right={
                 <TextInput.Icon
                   icon={pwVisible ? "eye" : "eye-off"}
@@ -73,12 +73,13 @@ const Login = ({ navigation }: LoginScreenProps) => {
               }
             />
           </View>
+
           {errorLogin ? (
             <View style={styles.noIDMsgBox}>
               <Text style={styles.noIDMsg}>일치하는 정보가 없습니다</Text>
             </View>
           ) : null}
-          <View style={styles.userInputAreaContainer}>
+          <View style={styles.forgetPWArea}>
             <TouchableOpacity onPress={() => navigation.navigate("FindPW")}>
               <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>
             </TouchableOpacity>
@@ -124,6 +125,8 @@ const styles = StyleSheet.create({
 
   userInputAreaContainer: {
     alignItems: "center",
+    //backgroundColor: "blue",
+    height: 150,
   },
 
   emailInputBox: {
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
     marginTop: 16,
+    justifyContent: "center",
   },
 
   passwordInputBox: {
@@ -144,9 +148,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "400",
     marginTop: 8,
+    justifyContent: "center",
   },
 
   noIDMsgBox: {
+    width: 335,
+    height: 25,
+    //backgroundColor: "pink",
     alignItems: "flex-start",
   },
 
@@ -155,6 +163,11 @@ const styles = StyleSheet.create({
     color: "#F56C3B",
     fontSize: 12,
     fontWeight: "400",
+    paddingLeft: 3,
+  },
+
+  forgetPWArea: {
+    alignItems: "center",
   },
 
   forgotPWNotice: {

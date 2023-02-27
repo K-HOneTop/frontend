@@ -123,7 +123,7 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
               <Text style={styles.errorNickName}>중복된 닉네임입니다</Text>
             </View>
           ) : null}
-          {errorNickName == 2 ? (
+          {errorNickName == 0 ? (
             <View style={styles.nickNameGoodMsgBox}>
               <Text style={styles.nickNameGoodMsg}>
                 사용 가능한 닉네임 입니다.

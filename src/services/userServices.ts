@@ -30,7 +30,9 @@ class userServices {
   //비밀번호 찾기
   async FindPassWord(email: string) {
     try {
-      const response = await axios.get(`${SERVER_URL}/mail?rcv=${email}`);
+      const response = await axios.get(
+        `${SERVER_URL}/member/password/${email}`
+      );
       console.log(response);
       return response.status;
     } catch (error) {
@@ -44,6 +46,19 @@ class userServices {
     try {
       const response = await axios.post(
         `${SERVER_URL}/member/signup/${emailDataString}`
+      );
+      console.log(response);
+      return response.status;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //닉네임 중복체크
+  async NickNameCheck(nickname: string) {
+    try {
+      const response = await axios.get(
+        `${SERVER_URL}/member/signup/${nickname}`
       );
       console.log(response);
       return response.status;

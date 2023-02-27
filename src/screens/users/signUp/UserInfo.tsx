@@ -35,7 +35,7 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
   //비밀번호 오류
   const [errorPW, setErrorPW] = useState(false);
   //닉네임 오류
-  const [errorNickName, setErrorNickName] = useState(false);
+  const [errorNickName, setErrorNickName] = useState(1);
 
   //비밀번호 상태 확인
   useEffect(() => {
@@ -53,10 +53,20 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
   }, [password]);
 
   //닉네임 중복 체크
+  const nickNameCheck = async () => {
+    const nickNameResponse = await userService.NickNameCheck(nickName);
+    if (nickNameResponse == 200) setErrorNickName(0); //올바른 닉네임
+    else setErrorNickName(3); //중복된 닉네임
+  };
+
+  useEffect(() => {
+    nickNameCheck();
+  }, [nickName]);
 
   //회원가입 API 연결
   const signUpBtnClick = async () => {
-    //navigation.navigate("Welcome");
+    const response = await userService.SignUp(name, password, nickName);
+    if (response == 200) navigation.navigate("Welcome");
   };
 
   return (
@@ -108,16 +118,18 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
             activeUnderlineColor="white"
             selectionColor="black"
           />
-          {errorNickName ? (
+          {errorNickName == 3 ? (
             <View style={styles.errorNickNameBox}>
               <Text style={styles.errorNickName}>중복된 닉네임입니다</Text>
             </View>
-          ) : /*<View style={styles.nickNameGoodMsgBox}>
+          ) : null}
+          {errorNickName == 2 ? (
+            <View style={styles.nickNameGoodMsgBox}>
               <Text style={styles.nickNameGoodMsg}>
                 사용 가능한 닉네임 입니다.
               </Text>
-            </View>*/
-          null}
+            </View>
+          ) : null}
         </View>
       </View>
       <View style={styles.midArea}></View>

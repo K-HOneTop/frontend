@@ -20,13 +20,17 @@ export type EmailScreenProps = StackScreenProps<UsersStackParamList, "Email">;
 const Email = ({ navigation }: EmailScreenProps) => {
   const [email, setEmail] = useState<string>("");
   const [error, setErrorCode] = useState(false);
+  const [dupEmail, setDupEmail] = useState(false);
 
   //이메일 전달 API
-  const nextBtnClick = () => {
+  const nextBtnClick = async () => {
+    setDupEmail(false);
+    setErrorCode(false);
     if (email.includes("@") == true) {
       setErrorCode(false);
-      //userServices.Email(email);
-      navigation.navigate("AuthCode");
+      const response = await userServices.Email(email);
+      if (response == 200) navigation.navigate("AuthCode");
+      else setDupEmail(true);
     } else {
       setErrorCode(true);
     }
@@ -56,6 +60,11 @@ const Email = ({ navigation }: EmailScreenProps) => {
           {error ? (
             <View style={styles.noIDMsgBox}>
               <Text style={styles.noIDMsg}>이메일을 정확히 입력해주세요</Text>
+            </View>
+          ) : null}
+          {dupEmail ? (
+            <View style={styles.noIDMsgBox}>
+              <Text style={styles.noIDMsg}>중복된 이메일입니다</Text>
             </View>
           ) : null}
           <TouchableOpacity>

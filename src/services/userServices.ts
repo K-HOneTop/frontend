@@ -29,10 +29,10 @@ class userServices {
 
   //비밀번호 찾기
   async FindPassWord(email: string) {
-    const emailString = email;
     try {
       const response = await axios.get(`${SERVER_URL}/mail?rcv=${email}`);
       console.log(response);
+      return response.status;
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +46,7 @@ class userServices {
         `${SERVER_URL}/member/signup/${emailDataString}`
       );
       console.log(response);
-      return response;
+      return response.status;
     } catch (error) {
       console.log(error);
     }

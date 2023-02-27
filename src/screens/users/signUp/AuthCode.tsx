@@ -26,14 +26,14 @@ const AuthCode = ({ navigation }: AuthCodeScreenProps) => {
 
   //인증코드 전송 API 연결
   const nextBtnLogin = async () => {
-    /*const response = await userServices.AuthCode(authCode);
+    const response = await userServices.AuthCode(authCode);
     console.log(response);
     if (response == 200) {
       navigation.navigate("UserInfo");
     } else {
       setErrorCode(true);
-    }*/
-    navigation.navigate("UserInfo");
+    }
+    //navigation.navigate("UserInfo");
   };
 
   const [btnDisableState, setbtnDisableState] = useState(true);
@@ -60,7 +60,7 @@ const AuthCode = ({ navigation }: AuthCodeScreenProps) => {
           />
           {error ? (
             <View style={styles.errorMsgBox}>
-              <Text style={styles.errorMsg}>이메일을 정확히 입력해주세요</Text>
+              <Text style={styles.errorMsg}>인증번호가 틀렸습니다</Text>
             </View>
           ) : null}
         </View>

@@ -31,12 +31,12 @@ const FindPW = ({ navigation }: FindPWScreenProps) => {
   //인증코드 전송 API 연결
   const [errorCode, setErrorCode] = useState(true);
   const nextBtnLogin = async () => {
-    /*const response = await userServices.FindPassWord(email);
+    const response = await userServices.FindPassWord(email);
     console.log(response);
     if (response == 200) {
-      navigation.navigate("Login");
-    } else setErrorCode(true);*/
-    navigation.navigate("GoToLogin");
+      navigation.navigate("GoToLogin");
+    } else setErrorCode(true);
+    //navigation.navigate("GoToLogin");
   };
 
   return (

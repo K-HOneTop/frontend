@@ -38,7 +38,7 @@ class userServices {
     }
   }
 
-  //이메일
+  //이메일(중복체크)
   async Email(email: string) {
     emailDataString = email;
     try {

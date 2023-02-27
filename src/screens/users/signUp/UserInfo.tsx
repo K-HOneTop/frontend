@@ -42,7 +42,9 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
     var regExpEng = /[A-Za-z]/g;
     var regExpNum = /[0-9]/g;
 
-    if (
+    if (password.length === 0) {
+      setErrorPW(false);
+    } else if (
       password.length < 8 ||
       password.length > 24 ||
       regExpEng.test(password) == false ||
@@ -68,8 +70,10 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
 
   //회원가입 API 연결
   const signUpBtnClick = async () => {
-    const response = await userService.SignUp(name, password, nickName);
-    if (response == 200) navigation.navigate("Welcome");
+    if (errorNickName == 0 && errorPW == false && name.length !== 0) {
+      const response = await userService.SignUp(name, password, nickName);
+      if (response == 200) navigation.navigate("Welcome");
+    }
   };
 
   return (

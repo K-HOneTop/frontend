@@ -37,23 +37,26 @@ const UserInfo = ({ navigation }: UserInfoScreenProps) => {
   //닉네임 오류
   const [errorNickName, setErrorNickName] = useState(false);
 
-  //회원가입 API 연결
-  const signUpBtnClick = async () => {
-    //비밀번호 상태 확인
-    if (password.length < 8 || password.length > 24) {
+  //비밀번호 상태 확인
+  useEffect(() => {
+    var regExpEng = /[A-Za-z]/g;
+    var regExpNum = /[0-9]/g;
+
+    if (
+      password.length < 8 ||
+      password.length > 24 ||
+      regExpEng.test(password) == false ||
+      regExpNum.test(password) == false
+    ) {
       setErrorPW(true);
     } else setErrorPW(false);
-    var regExp = /[A-Za-z0-9]/;
-    if (regExp.test(password) == false) setErrorPW(true);
-    else setErrorPW(false);
+  }, [password]);
 
-    //닉네임 상태확인
-    /*const response = await userService.SignUp(name, password, nickName);
-    if (response === 200) navigation.navigate("Welcome");
-    else {
-      setErrorNickName(true);
-    }*/
-    navigation.navigate("Welcome");
+  //닉네임 중복 체크
+
+  //회원가입 API 연결
+  const signUpBtnClick = async () => {
+    //navigation.navigate("Welcome");
   };
 
   return (

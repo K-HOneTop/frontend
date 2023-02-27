@@ -19,7 +19,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
   const [userPW, setUserPW] = useState<string>("");
 
   const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
-  const [errorLogin, setErrorLogin] = useState(true); //로그인 정보 틀렸을 때
+  const [errorLogin, setErrorLogin] = useState(false); //로그인 정보 틀렸을 때
 
   //로그인 API 연결
   const loginBtnClick = async () => {
@@ -52,6 +52,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
             placeholder="이메일"
             placeholderTextColor="#ADADAD"
             onChangeText={(userEmail) => setUserEmail(userEmail)}
+            activeOutlineColor="white"
           />
           <View>
             <TextInput
@@ -63,6 +64,7 @@ const Login = ({ navigation }: LoginScreenProps) => {
               secureTextEntry={!pwVisible}
               placeholder="비밀번호"
               placeholderTextColor="#ADADAD"
+              activeOutlineColor="white"
               onChangeText={(userPW) => setUserPW(userPW)}
               right={
                 <TextInput.Icon

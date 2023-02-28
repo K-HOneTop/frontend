@@ -29,8 +29,11 @@ class userServices {
 
   //비밀번호 찾기
   async FindPassWord(email: string) {
+    console.log(`${SERVER_URL}/member/password/${email}`);
     try {
-      const response = await axios.get(`${SERVER_URL}/mail?rcv=${email}`);
+      const response = await axios.get(
+        `${SERVER_URL}/member/password/${email}`
+      );
       console.log(response);
       return response.status;
     } catch (error) {
@@ -38,12 +41,40 @@ class userServices {
     }
   }
 
-  //이메일(중복체크)
+  //이메일중복체크 이후 인증코드 전송
   async Email(email: string) {
     emailDataString = email;
+    console.log(`${SERVER_URL}/member/signup/${emailDataString}`);
+    //중복체크
     try {
       const response = await axios.post(
         `${SERVER_URL}/member/signup/${emailDataString}`
+      );
+      console.log(response);
+
+      //중복체크 통과하면
+      if (response.status == 200) {
+        try {
+          const authCodeResponse = await axios.get(
+            `${SERVER_URL}/mail?rcv=${emailDataString}`
+          );
+          console.log("인증코드 전송");
+          console.log(authCodeResponse.status);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      return response.status;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  //닉네임 중복체크
+  async NickNameCheck(nickname: string) {
+    try {
+      const response = await axios.get(
+        `${SERVER_URL}/member/signup/${nickname}`
       );
       console.log(response);
       return response.status;

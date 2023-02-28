@@ -15,26 +15,10 @@ import userServices from "../../../services/userServices";
 import { UsersStackParamList } from "../../../types/stacks/UserStackTypes";
 
 //Export type
-export type EmailScreenProps = StackScreenProps<UsersStackParamList, "Email">;
+export type FindPWScreenProps = StackScreenProps<UsersStackParamList, "FindPW">;
 
-const Email = ({ navigation }: EmailScreenProps) => {
+const FindPW = ({ navigation }: FindPWScreenProps) => {
   const [email, setEmail] = useState<string>("");
-  const [error, setErrorCode] = useState(false);
-  const [dupEmail, setDupEmail] = useState(false);
-
-  //이메일 전달 API
-  const nextBtnClick = async () => {
-    setDupEmail(false);
-    setErrorCode(false);
-    if (email.includes("@") == true) {
-      setErrorCode(false);
-      const response = await userServices.Email(email);
-      if (response == 200) navigation.navigate("AuthCode");
-      else setDupEmail(true);
-    } else {
-      setErrorCode(true);
-    }
-  };
 
   //입력창 상태 관리
   const [btnDisableState, setbtnDisableState] = useState(true);
@@ -44,41 +28,41 @@ const Email = ({ navigation }: EmailScreenProps) => {
     else setbtnDisableState(true);
   }, [email]);
 
+  //인증코드 전송 API 연결
+  const [errorCode, setErrorCode] = useState(false);
+  const nextBtnLogin = async () => {
+    const response = await userServices.FindPassWord(email);
+    console.log(response);
+    if (response == 200) {
+      navigation.navigate("GoToLogin");
+    } else setErrorCode(true);
+    //navigation.navigate("GoToLogin");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topArea}>
-        <Text style={styles.notice}>이메일을 입력해주세요</Text>
+        <Text style={styles.notice}>비밀번호를 잊으셨나요?</Text>
         <View style={styles.inputAreaContainer}>
           <TextInput
-            textContentType="emailAddress"
             selectionColor="black"
-            style={error ? styles.errorEmailInputBox : styles.emailInputBox}
             placeholder="이메일"
+            style={errorCode ? styles.errorEmailInputBox : styles.emailInputBox}
             placeholderTextColor="#ADADAD"
             onChangeText={(email) => setEmail(email)}
           />
-          {error ? (
-            <View style={styles.noIDMsgBox}>
-              <Text style={styles.noIDMsg}>이메일을 정확히 입력해주세요</Text>
-            </View>
-          ) : null}
-          {dupEmail ? (
-            <View style={styles.noIDMsgBox}>
-              <Text style={styles.noIDMsg}>중복된 이메일입니다</Text>
-            </View>
-          ) : null}
-          <TouchableOpacity>
-            <Text style={styles.personalInfoNotice}>
-              개인정보 보호 정책 보기
-            </Text>
-          </TouchableOpacity>
         </View>
+        {errorCode ? (
+          <View style={styles.noEmailBox}>
+            <Text style={styles.noEmailMsg}>일치하는 이메일이 없습니다</Text>
+          </View>
+        ) : null}
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
         <TouchableOpacity
           disabled={btnDisableState}
-          onPress={nextBtnClick}
+          onPress={nextBtnLogin}
           style={btnDisableState ? styles.nextDisableBtnBox : styles.nextBtnBox}
         >
           <Text style={styles.nextText}>다음</Text>
@@ -88,7 +72,7 @@ const Email = ({ navigation }: EmailScreenProps) => {
   );
 };
 
-export default Email;
+export default FindPW;
 
 const styles = StyleSheet.create({
   container: {
@@ -112,18 +96,7 @@ const styles = StyleSheet.create({
   inputAreaContainer: {
     alignItems: "center",
   },
-  errorEmailInputBox: {
-    width: 335,
-    height: 52,
-    backgroundColor: "#F3F3F3",
-    borderRadius: 6,
-    borderColor: "#F56C3B",
-    borderWidth: 1,
-    fontSize: 17,
-    fontWeight: "400",
-    marginTop: 16,
-    paddingLeft: 16,
-  },
+
   emailInputBox: {
     width: 335,
     height: 52,
@@ -136,26 +109,29 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
   },
 
-  noIDMsgBox: {
+  errorEmailInputBox: {
     width: 335,
-    height: 25,
-    //backgroundColor: "pink",
-    alignItems: "flex-start",
+    height: 52,
+    backgroundColor: "#F3F3F3",
+    borderRadius: 6,
+    borderColor: "#F56C3B",
+    borderWidth: 1,
+    fontSize: 17,
+    fontWeight: "400",
+    marginTop: 16,
+    paddingLeft: 16,
   },
 
-  noIDMsg: {
+  noEmailBox: {
+    alignItems: "flex-start",
+    paddingLeft: 16,
+  },
+
+  noEmailMsg: {
     marginTop: 8,
     color: "#F56C3B",
     fontSize: 12,
     fontWeight: "400",
-    paddingLeft: 3,
-  },
-
-  personalInfoNotice: {
-    fontSize: 13,
-    fontWeight: "400",
-    marginTop: 8,
-    color: "#ADADAD",
   },
 
   midArea: {

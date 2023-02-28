@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 
@@ -19,18 +19,25 @@ const Login = ({ navigation }: LoginScreenProps) => {
   const [userPW, setUserPW] = useState<string>("");
 
   const [pwVisible, setPWVisible] = useState<Boolean>(false); //비밀번호 보이고 안보이게 하기
+  const [errorLogin, setErrorLogin] = useState(false); //로그인 정보 틀렸을 때
 
   //로그인 API 연결
   const loginBtnClick = async () => {
-    if (userEmail === "" || userPW === "") {
-      Alert.alert("안내", "빈 칸을 모두 입력해주세요.");
-    } else {
-      const response = await userService.SignIn(userEmail, userPW);
-      console.log(response);
-      if (response == 200) navigation.navigate("Home");
-      else Alert.alert("안내", "로그인 정보를 다시 입력해주세요.");
-    }
+    const response = await userService.SignIn(userEmail, userPW);
+    console.log(response);
+    if (response == 200) navigation.navigate("Home");
+    else setErrorLogin(true);
+    //navigation.navigate("Home");
   };
+
+  //입력창 상태 관리
+  const [btnDisableState, setbtnDisableState] = useState(true);
+  useEffect(() => {
+    let btnClickAble = userEmail.length && userPW.length;
+    if (btnClickAble > 0)
+      setbtnDisableState(false); //둘다 길이 1이상이어야만 disable 해제
+    else setbtnDisableState(true);
+  }, [userEmail, userPW]);
 
   return (
     <View style={styles.container}>
@@ -38,24 +45,26 @@ const Login = ({ navigation }: LoginScreenProps) => {
         <Text style={styles.notice}>로그인하기</Text>
         <View style={styles.userInputAreaContainer}>
           <TextInput
+            mode="outlined"
             style={styles.emailInputBox}
+            outlineColor={errorLogin ? "#F56C3B" : "white"}
+            selectionColor="black"
             placeholder="이메일"
             placeholderTextColor="#ADADAD"
             onChangeText={(userEmail) => setUserEmail(userEmail)}
-            underlineColor="white"
-            activeUnderlineColor="white"
-            selectionColor="black"
+            activeOutlineColor="white"
           />
           <View>
             <TextInput
               style={styles.passwordInputBox}
+              mode="outlined"
+              outlineColor={errorLogin ? "#F56C3B" : "white"}
+              activeOutlineColor="white"
+              selectionColor="black"
               secureTextEntry={!pwVisible}
               placeholder="비밀번호"
               placeholderTextColor="#ADADAD"
               onChangeText={(userPW) => setUserPW(userPW)}
-              underlineColor="white"
-              activeUnderlineColor="white"
-              selectionColor="black"
               right={
                 <TextInput.Icon
                   icon={pwVisible ? "eye" : "eye-off"}
@@ -64,14 +73,29 @@ const Login = ({ navigation }: LoginScreenProps) => {
               }
             />
           </View>
-          <TouchableOpacity>
-            <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>
-          </TouchableOpacity>
+
+          {errorLogin ? (
+            <View style={styles.noIDMsgBox}>
+              <Text style={styles.noIDMsg}>일치하는 정보가 없습니다</Text>
+            </View>
+          ) : null}
+
+          <View style={styles.forgetPWArea}>
+            <TouchableOpacity onPress={() => navigation.navigate("FindPW")}>
+              <Text style={styles.forgotPWNotice}>비밀번호를 잊으셨나요?</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
       <View style={styles.midArea}></View>
       <View style={styles.btmArea}>
-        <TouchableOpacity style={styles.loginBtnBox} onPress={loginBtnClick}>
+        <TouchableOpacity
+          style={
+            btnDisableState ? styles.loginDisableBtnBox : styles.loginBtnBox
+          }
+          onPress={loginBtnClick}
+          disabled={btnDisableState}
+        >
           <Text style={styles.loginText}>로그인하기</Text>
         </TouchableOpacity>
       </View>
@@ -102,6 +126,8 @@ const styles = StyleSheet.create({
 
   userInputAreaContainer: {
     alignItems: "center",
+    //backgroundColor: "blue",
+    height: 150,
   },
 
   emailInputBox: {
@@ -109,10 +135,10 @@ const styles = StyleSheet.create({
     height: 52,
     backgroundColor: "#F3F3F3",
     borderRadius: 6,
-    borderColor: "#F3F3F3",
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "400",
     marginTop: 16,
+    justifyContent: "center",
   },
 
   passwordInputBox: {
@@ -120,18 +146,36 @@ const styles = StyleSheet.create({
     height: 52,
     backgroundColor: "#F3F3F3",
     borderRadius: 6,
-    borderColor: "#F3F3F3",
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: "400",
     marginTop: 8,
+    justifyContent: "center",
+  },
+
+  noIDMsgBox: {
+    width: 335,
+    height: 25,
+    //backgroundColor: "pink",
+    alignItems: "flex-start",
+  },
+
+  noIDMsg: {
+    marginTop: 8,
+    color: "#F56C3B",
+    fontSize: 12,
+    fontWeight: "400",
+    paddingLeft: 3,
+  },
+
+  forgetPWArea: {
+    alignItems: "center",
   },
 
   forgotPWNotice: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "400",
-    textDecorationLine: "underline",
     marginTop: 8,
-    color: "#ADADAD",
+    color: "#8C8C8C",
   },
 
   midArea: {
@@ -147,9 +191,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     //backgroundColor: "pink",
   },
+  loginDisableBtnBox: {
+    backgroundColor: "#E9E9E9",
+    width: 335,
+    height: 52,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 6,
+    marginBottom: 50,
+  },
 
   loginBtnBox: {
-    backgroundColor: "#222222",
+    backgroundColor: "#F56C3B",
     width: 335,
     height: 52,
     justifyContent: "center",
@@ -161,6 +214,6 @@ const styles = StyleSheet.create({
   loginText: {
     color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "400",
   },
 });

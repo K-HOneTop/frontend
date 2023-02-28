@@ -64,7 +64,6 @@ const Login = ({ navigation }: LoginScreenProps) => {
               secureTextEntry={!pwVisible}
               placeholder="비밀번호"
               placeholderTextColor="#ADADAD"
-              activeOutlineColor="white"
               onChangeText={(userPW) => setUserPW(userPW)}
               right={
                 <TextInput.Icon

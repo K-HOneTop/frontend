@@ -21,8 +21,8 @@ function DetailModal ({certificationId, setModalStatus}:Props ) {
 
     return (
 
-        <View style={customStyle.container}>
-                <View style={customStyle.centeredView}>
+        <View style={customStyle.centeredView}>
+                <View style={{justifyContent: 'center', alignItems:'center'}}>
                     <View style={customStyle.modalView}>
                         <View style={customStyle.modalViewTitleArea}>
                             <Text style={[customStyle.modalTitleTxt,{flex:1}]}>{detailInfo.title}{"("}{detailInfo.number}{")회차"}</Text>
@@ -98,9 +98,9 @@ export default DetailModal;
 const customStyle = StyleSheet.create({
     container: {
         flex: 1,
-        paddingRight:20,
-        paddingLeft:20,
-        paddingTop:12,
+        // paddingRight:20,
+        // paddingLeft:20,
+        // paddingTop:12,
 
         justifyContent: "center",
         alignItems: 'center',

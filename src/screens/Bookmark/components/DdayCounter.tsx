@@ -84,6 +84,7 @@ const customStyles = StyleSheet.create({
         paddingRight:9,
         justifyContent: 'center',
         alignItems: 'center',
+        height:21,
     },
     boxTxt: {
         color: "#FFFFFF",

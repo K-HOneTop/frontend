@@ -179,6 +179,7 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                         <View style={customStyles.btnContainer}>
                             <TouchableOpacity style={customStyles.addBtn}
                                               onPress={() => {
+                                                  // @ts-ignore
                                                   this.RBSheet.open()
                                               }}
                             >

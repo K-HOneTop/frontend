@@ -1,21 +1,53 @@
-import React from "react";
-import {View, Text, StyleSheet, ScrollView, Image} from "react-native";
+import React, {useState} from "react";
+import {View, Text, StyleSheet, ScrollView, Image, Modal, Pressable, Alert} from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
+import {WebView} from 'react-native-webview';
 
 
 import {BookmarkStackParamList} from "../../types/stacks/BookmarkStackTypes";
 import StatusTag from "./components/StatusTag";
 import DdayCounter from "./components/DdayCounter";
+import window from "@react-navigation/native/lib/typescript/src/__mocks__/window";
+import DetailModal from "./components/DetailModal";
+
 
 export type BookmarkScreenProps = StackScreenProps<BookmarkStackParamList, "Detail">;
 
 
 //즐겨찾기에서 회차별 디테일이 있는 경우의 페이지
 const DetailScreen = ({ navigation }: BookmarkScreenProps) => {
+    const [modalVisible, setModalVisible] = useState(false);
+
+    //Modal visible 변수를 Props로 넘겨서 작동시키기위해
+    const setModalStatus = (check: boolean): void => {
+
+        if(check){
+            setModalVisible(true);
+        }else{
+            setModalVisible(false);
+        }
+
+
+    }
+
+
+
     return (
         <View style={customStyle.container}>
             <ScrollView>
                 {details.map(card => (
+                    <Pressable onPress={() => setModalVisible(true)}>
+
+                        <Modal
+                            animationType="fade"
+                            transparent={true}
+                            visible={modalVisible}
+                            onRequestClose={() => {
+                                setModalVisible(!modalVisible);
+                            }}>
+                            <DetailModal setModalStatus={setModalStatus} certificationId={card.id}/>
+                        </Modal>
+
                     <View style={customStyle.card}>
                         <View style={{flexDirection: "row", marginBottom: 8}}>
                             <View>
@@ -35,7 +67,7 @@ const DetailScreen = ({ navigation }: BookmarkScreenProps) => {
                                 </Text>
                             </View>
                             <View style={{flex:1}}>
-                                {card.isDetail === true ? (<Image source={require('../../assets/images/next.png')}/>) : (<View/>) }
+                                <Image source={require('../../assets/images/next.png')}/>
                             </View>
                         </View>
                         <View>
@@ -44,6 +76,7 @@ const DetailScreen = ({ navigation }: BookmarkScreenProps) => {
                             </Text>
                         </View>
                     </View>
+                    </Pressable>
 
                 ))}
             </ScrollView>
@@ -61,7 +94,9 @@ const customStyle = StyleSheet.create({
         paddingTop:12,
 
         justifyContent: "center",
-        alignItems: 'center'
+        alignItems: 'center',
+
+
     },
 
     //card
@@ -102,7 +137,191 @@ const customStyle = StyleSheet.create({
         lineHeight:18.2,
 
 
-    }
+    },
+
+    //modal
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+
+        //모달이 올라오면 배경색을 어둡게 깔아주기
+        backgroundColor: 'rgba(173,173,173,0.4)',
+
+    },
+    modalView: {
+
+        paddingTop:10,
+        paddingBottom:20,
+        paddingLeft:20,
+        paddingRight:20,
+
+        backgroundColor: 'white',
+        borderRadius: 12,
+
+        alignItems: 'center',
+
+        height: 366,
+        width: 335,
+
+
+    },
+    modalViewTitleArea:{
+        alignItems: 'center',
+        flex:46,
+        flexDirection: "row",
+        // backgroundColor: 'pink',
+    },
+    modalViewMainArea:{
+        alignItems: 'center',
+        flex:195,
+        marginTop:10,
+        marginBottom:30,
+        // backgroundColor: 'red',
+
+        paddingRight:40,
+        paddingLeft:10,
+    },
+    modalViewButtonArea:{
+        alignItems: 'center',
+        flex:55,
+        // backgroundColor: 'yellow',
+        flexDirection: "row",
+    },
+
+    //main area
+    mainTitleTxt:{
+        color: "#141414",
+        fontWeight: "400",
+        fontSize: 15,
+        marginRight:24,
+    },
+    mainDetailTxt:{
+        color: "#8C8C8C",
+        fontWeight: "400",
+        fontSize: 15,
+        flexWrap: 'wrap', //컨테이너 끝에 닿으면 줄바꿈
+    },
+    textArea:{
+        width: 264,
+        marginTop:6,
+        marginBottom:6,
+        flexDirection:"row",
+    },
+
+    //text
+    modalTitleTxt:{
+        fontSize:20,
+        fontWeight: "600",
+        color: "#141414",
+    },
+
+    //Button
+    alertButton: {
+        backgroundColor: '#FFFFFF',
+        borderRadius:6,
+        paddingTop: 18,
+        paddingLeft: 16,
+        paddingRight:20,
+        paddingBottom:18,
+
+        alignItems: 'center',
+        justifyContent: "center",
+
+        borderColor: "#E9E9E9",
+        borderWidth:1,
+        borderStyle: 'solid',
+
+        flexDirection:"row",
+        marginRight:4,
+    },
+    alertBtnTxt:{
+        color: "#8C8C8C",
+        fontWeight: "400",
+        fontSize: 16,
+        lineHeight: 19,
+
+        marginLeft:4,
+    },
+
+    //홈페이지 바로가기 버튼
+    homepageButton: {
+        // backgroundColor: '#F56C3B',
+
+        borderRadius:6,
+        paddingTop: 18,
+        paddingLeft: 27.5,
+        paddingRight:27.5,
+        paddingBottom:18,
+
+        alignItems: 'center',
+        justifyContent: "center",
+
+
+        marginLeft:4,
+
+    },
+    homepageBtnTxt:{
+        color: "#FFFFFF",
+        fontWeight: "400",
+        fontSize: 16,
+        lineHeight: 19,
+
+    },
+    homepageButtonOn: {
+        backgroundColor: '#F56C3B',
+
+        borderRadius:6,
+        paddingTop: 18,
+        paddingLeft: 27.5,
+        paddingRight:27.5,
+        paddingBottom:18,
+
+        alignItems: 'center',
+        justifyContent: "center",
+
+
+        marginLeft:4,
+
+    },
+    homepageOnBtnTxt:{
+        color: "#FFFFFF",
+        fontWeight: "400",
+        fontSize: 16,
+        lineHeight: 19,
+
+    },
+
+    //수정하기
+    modifyBtn:{
+        backgroundColor: "#F56C3B",
+        borderRadius: 50,
+        width:126,
+        height:48,
+        flexDirection: "row",
+        justifyContent:'center',
+        alignItems: 'center',
+        marginTop:12,
+    },
+
+
+
+
+    buttonOpen: {
+        backgroundColor: '#F194FF',
+    },
+    buttonClose: {
+        backgroundColor: '#2196F3',
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    },
 
 });
 
@@ -179,3 +398,5 @@ const details = [
 
 
 ]
+
+

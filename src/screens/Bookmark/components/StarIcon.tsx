@@ -17,7 +17,7 @@ function StarIcon ({selected}:Props) {
     return (
         <View>
             <Pressable
-                style={customStyles.star}
+                // style={customStyles.star}
                 onPress={onChange}>
                 {isSelected === true ? (
                     <Image source={require('../../../assets/images/star_on.png')}/>

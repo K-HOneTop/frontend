@@ -26,6 +26,7 @@ function StatusTag ({type}:Props) {
 
     const [baseColor, setBaseColor] = useState<String>("");
     const [textColor, setTextColor] = useState<String>("");
+    const [borderColor, setBorderColor] = useState<String>("white");
 
 
     useEffect(() => {
@@ -40,6 +41,10 @@ function StatusTag ({type}:Props) {
             setBaseColor("#E9E9E9");
             setTextColor("#8C8C8C");
         }else if(type === "직접추가"){
+            setBaseColor("#FFFFFF");
+            setTextColor("#8C8C8C");
+            setBorderColor("#E9E9E9");
+        }else if(type === "기간미입력"){
             setBaseColor("#D3F5C6");
             setTextColor("#74D351");
         }else if(type === "접수예정"){
@@ -53,7 +58,7 @@ function StatusTag ({type}:Props) {
 
 
     return (
-        <View style={[customStyles.box,{backgroundColor: `${baseColor}`}]}>
+        <View style={[customStyles.box,{backgroundColor: `${baseColor}`}, {borderColor: `${borderColor}`}]}>
             <Text style={[customStyles.boxTxt, {color:`${textColor}`}]}>{type}</Text>
         </View>
     );
@@ -74,6 +79,11 @@ const customStyles = StyleSheet.create({
         paddingRight:9,
         justifyContent: 'center',
         alignItems: 'center',
+        height: 23,
+
+
+
+        borderWidth:1,
     },
     boxTxt: {
         fontWeight: "400",

@@ -180,8 +180,8 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                     <Image source={require('../../assets/images/plus.png')}/>
                                 </View>
+                                <SearchModal />
                             </TouchableOpacity>
-                            <SearchModal />
                         </View>
                     </View>
 

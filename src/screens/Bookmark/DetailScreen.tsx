@@ -9,6 +9,7 @@ import StatusTag from "./components/StatusTag";
 import DdayCounter from "./components/DdayCounter";
 import window from "@react-navigation/native/lib/typescript/src/__mocks__/window";
 import DetailModal from "./components/DetailModal";
+import CustomHeader from "./components/CustomHeader";
 
 
 export type BookmarkScreenProps = StackScreenProps<BookmarkStackParamList, "Detail">;
@@ -33,8 +34,12 @@ const DetailScreen = ({ navigation }: BookmarkScreenProps) => {
 
 
     return (
-        <View style={customStyle.container}>
-            <ScrollView>
+        <>
+            <View >
+                <CustomHeader title={"토익(TOEIC)"}/>
+            </View>
+            <View style={customStyle.container}>
+            <ScrollView >
                 {details.map(card => (
                     <Pressable onPress={() => setModalVisible(true)}>
 
@@ -81,6 +86,7 @@ const DetailScreen = ({ navigation }: BookmarkScreenProps) => {
                 ))}
             </ScrollView>
         </View>
+        </>
     );
 };
 

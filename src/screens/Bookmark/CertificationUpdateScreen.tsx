@@ -6,6 +6,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import {BookmarkStackParamList} from "../../types/stacks/BookmarkStackTypes";
 import DatePicker from "react-native-date-picker";
 import SearchModal from "./components/SearchModal";
+import CustomHeader from "./components/CustomHeader";
 
 export type BookmarkScreenProps = StackScreenProps<BookmarkStackParamList, "CertificationUpdate">;
 
@@ -80,6 +81,10 @@ const CertificationUpdateScreen = ({ navigation }: BookmarkScreenProps) => {
 
 
     return (
+        <>
+        <View >
+            <CustomHeader title={"t"}/>
+        </View>
         <View style={customStyle.container}>
             <ScrollView>
                 <View style={customStyle.titleContainer}>
@@ -163,6 +168,7 @@ const CertificationUpdateScreen = ({ navigation }: BookmarkScreenProps) => {
                 </View>
             </ScrollView>
         </View>
+            </>
     );
 };
 

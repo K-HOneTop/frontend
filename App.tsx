@@ -23,9 +23,12 @@ import CertificationUpdateScreen from "./src/screens/Bookmark/CertificationUpdat
 import { UsersStackParamList } from "./src/types/stacks/UserStackTypes";
 import { HomeStackParamList } from "./src/types/stacks/HomeStackTypes";
 import { BookmarkStackParamList } from "./src/types/stacks/BookmarkStackTypes";
+import BackBtn from "./src/screens/Bookmark/components/BackBtn";
+import {Header} from "@react-navigation/stack";
+import CustomHeader from "./src/screens/Bookmark/components/CustomHeader";
 
 //define screen stacks
-const usersStack = createNativeStackNavigator<UsersStackParamList>();
+// const usersStack = createNativeStackNavigator<UsersStackParamList>();
 const homeStack = createNativeStackNavigator<HomeStackParamList>();
 const bookmarkStack = createNativeStackNavigator<BookmarkStackParamList>();
 
@@ -38,17 +41,25 @@ const App = () => {
           <bookmarkStack.Screen
               name="Main"
               component={BookmarkScreen}
-              options={{ headerShown: false }}
+              options={{
+                headerShown: false
+          }}
           />
           <bookmarkStack.Screen
                 name="Detail"
                 component={BookmarkDetailScreen}
-                options={{ headerShown: true }}
+                options={{
+                    headerShown: false
+
+          }}
           />
           <bookmarkStack.Screen
               name="CertificationUpdate"
               component={CertificationUpdateScreen}
-              options={{ headerShown: true }}
+              options={{
+                  headerShown: false
+                // headerBackground: BackBtn,
+          }}
           />
         </bookmarkStack.Group>
       </bookmarkStack.Navigator>

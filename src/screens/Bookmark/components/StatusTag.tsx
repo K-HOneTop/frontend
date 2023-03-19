@@ -45,8 +45,8 @@ function StatusTag ({type}:Props) {
             setTextColor("#8C8C8C");
             setBorderColor("#E9E9E9");
         }else if(type === "기간미입력"){
-            setBaseColor("#D3F5C6");
-            setTextColor("#74D351");
+            setBaseColor("#ADE399");
+            setTextColor("#FFFFFF");
         }else if(type === "접수예정"){
             setBaseColor("#8C8C8C");
             setTextColor("#FFFFFF");

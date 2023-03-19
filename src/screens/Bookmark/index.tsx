@@ -162,6 +162,11 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                                                 <Text style={customStyles.institutionTxt}>{card.institution}</Text>
                                             </View>
                                         </View>
+                                            {card.isSelf === true ? (
+                                                <View style={customStyles.cardSelf}>
+                                                    <StatusTag type={"직접추가"}/>
+                                                </View>
+                                            ) : (<View/>) }
                                         <View style={customStyles.cardStar}>
                                             <StarIcon selected={true}/>
                                         </View>
@@ -322,6 +327,11 @@ const customStyles = StyleSheet.create({
         right:11.5,
         bottom:12,
     },
+    cardSelf:{
+        position: 'absolute',
+        left:16,
+        bottom:12,
+    },
 
     inputBox: {
         // flex:1,
@@ -399,48 +409,54 @@ const bookmarks:bookmarkType[] = [
         title : '토익(TOEIC)',
         institution : '한국진흥원',
         tag: '정기접수중',
-        leftDay: 3,
+        leftDay: 0,
         isDetail:true,
+        isSelf: false,
     },
     {
         id: 1,
         title : '정보처리기사',
         institution : '한국진흥원',
         tag: '정기접수중',
-        leftDay: 0,
+        leftDay: 12,
         isDetail:true,
+        isSelf: true,
     },
     {
         id: 2,
         title : '토익(TOEIC)',
         institution : '한국진흥원',
         tag: '추가접수중',
-        leftDay: 3,
+        leftDay: 12,
         isDetail:true,
+        isSelf: false,
     },
     {
         id: 3,
-        title : '회차없는시험',
+        title : '회차가없는시험',
         institution : '한국진흥원',
         tag: '접수마감',
         leftDay: -1,
         isDetail:false,
+        isSelf: false,
     },
     {
         id: 4,
         title : '토익(TOEIC)',
         institution : '한국진흥원',
-        tag: '직접추가',
-        leftDay: 36,
+        tag: '접수마감',
+        leftDay: -1,
         isDetail:false,
+        isSelf: true,
     },
     {
         id: 5,
-        title : '회차없는시험',
+        title : '토익 (TOEIC)',
         institution : '한국진흥원',
-        tag: '직접추가',
+        tag: '기간미입력',
         leftDay: -1,
         isDetail:false,
+        isSelf: true,
     },
     {
         id: 4,
@@ -449,6 +465,7 @@ const bookmarks:bookmarkType[] = [
         tag: '접수예정',
         leftDay: -1,
         isDetail:true,
+        isSelf: true,
     },
 ]
 

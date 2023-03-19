@@ -1,6 +1,6 @@
 //react import
 import React, {useState} from "react";
-import {View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Pressable} from "react-native";
+import {View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Pressable, TextInput, Modal} from "react-native";
 import { StackScreenProps } from "@react-navigation/stack";
 import RNPickerSelect from 'react-native-picker-select'; //버전 낮아서 picker가 안먹는듯?
 
@@ -8,6 +8,15 @@ import StarIcon from './components/StarIcon';
 
 
 import bookmarkType from "../../types/bookmarks/bookmarkTypes"
+
+
+//모달
+import RBSheet from "react-native-raw-bottom-sheet";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+
 
 
 //stack import
@@ -19,6 +28,9 @@ export type BookmarkScreenProps = StackScreenProps<BookmarkStackParamList, "Main
 import {styles} from './styles';
 import DdayCounter from "./components/DdayCounter";
 import StatusTag from "./components/StatusTag";
+import searchListType from "../../types/bookmarks/bookmarkTypes";
+import DetailModal from "./components/DetailModal";
+import SearchModal from "./components/SearchModal";
 
 const Bookmark = ({ navigation }: BookmarkScreenProps) => {
     const [resultNum, setResultNum] = useState<number>(6);
@@ -26,17 +38,46 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
 
 
 
+
+    //modal
+    const [modalVisible, setModalVisible] = useState(false);
+
+    //Modal visible 변수를 Props로 넘겨서 작동시키기위해
+    const setModalStatus = (check: boolean): void => {
+
+        if(check){
+            setModalVisible(true);
+        }else{
+            setModalVisible(false);
+        }
+
+
+    }
+
+
+
     const onPressDetailCard = (isDetail: boolean, type:string) => {
-        if(isDetail) {
+        if(isDetail) {//회차별 시험정보가 있음
             navigation.navigate('Detail')
         }
-        if(type==="직접추가"){
-            navigation.navigate('CertificationUpdate')
+        else if(type==="직접추가"){ // 직접추가임 ( 회차별 시험 정보는 당연히 없음)
+            setModalVisible(!modalVisible);
+        }
+        else if(!isDetail){ // 직접추가도 아니고 회차별 시험정보도 없음
+            setModalVisible(!modalVisible);
         }
     }
 
 
+    const onRegisterBtn = () => {
+        this.RBSheet.close();
+        navigation.navigate('CertificationUpdate')
+    }
+
+
+    // @ts-ignore
     return (
+        <>
         <View style={styles.container}>
             <View style={styles.containerStatus}/>
             <View style={styles.containerMain}>
@@ -47,7 +88,7 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                         <View style={{flex:8, alignItems: 'flex-start',backgroundColor:'white'}}>
                             <Text style={customStyles.resultTxt}>{'즐겨찾기 한 자격증 '}{resultNum}{'건'}</Text>
                         </View>
-                        <View style={{flex:2, alignItems: 'flex-end' ,backgroundColor:'red'}}>
+                        <View style={{flex:2, alignItems: 'flex-end'}}>
                             <RNPickerSelect
                                 useNativeAndroidPickerStyle={false}
                                 style={pickerSelectStyles}
@@ -74,7 +115,9 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                                     </View>
                                     <View>
                                         <TouchableOpacity
-                                            // onPress={() => ()}
+                                            onPress={() => (
+                                                this.RBSheet.open()
+                                            )}
                                             style={customStyles.btn}
                                         >
                                             <Text style={customStyles.btnTxt}>{'자격증 즐겨찾기 하러가기'}</Text>
@@ -89,6 +132,19 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                                 <View style={customStyles.cardView}>
                                     {bookmarks.map(card => (
                                         <TouchableOpacity onPress={()=>onPressDetailCard(card.isDetail, card.tag)}>
+
+                                            <View>
+                                                <Modal
+                                                    animationType="fade"
+                                                    transparent={true}
+                                                    visible={modalVisible}
+                                                    onRequestClose={() => {
+                                                        setModalVisible(!modalVisible);
+                                                    }}>
+                                                    <DetailModal setModalStatus={setModalStatus} certificationId={card.id}/>
+                                                </Modal>
+                                            </View>
+
                                         <View style={customStyles.cards}>
                                             <View style={{flexDirection: "row", marginBottom: 8}}>
                                                 <View>
@@ -100,13 +156,13 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                                             </View>
                                             <View style={{marginBottom:2, flexDirection:"row", alignItems: "center"}}>
                                                 <Text style={[customStyles.cardTitleTxt,{flex:9}]}>{card.title}</Text>
-                                                {card.isDetail ? (<Image style={{flex:1}} source={require('../../assets/images/next.png')}/>):(<Image style={{flex:1}} source={require('../../assets/images/next_invisible.png')}/>)}
+                                                <Image style={{flex:1}} source={require('../../assets/images/next.png')}/>
                                             </View>
                                             <View>
                                                 <Text style={customStyles.institutionTxt}>{card.institution}</Text>
                                             </View>
                                         </View>
-                                        <View>
+                                        <View style={customStyles.cardStar}>
                                             <StarIcon selected={true}/>
                                         </View>
                                         </TouchableOpacity>
@@ -117,18 +173,22 @@ const Bookmark = ({ navigation }: BookmarkScreenProps) => {
                         }
                         <View style={customStyles.btnContainer}>
                             <TouchableOpacity style={customStyles.addBtn}
-                                              // onPress={pickImage}
+                                              onPress={() => {
+                                                  this.RBSheet.open()
+                                              }}
                             >
                                 <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                     <Image source={require('../../assets/images/plus.png')}/>
                                 </View>
                             </TouchableOpacity>
+                            <SearchModal />
                         </View>
                     </View>
 
             </View>
             <View style={styles.containerBottom}/>
         </View>
+        </>
     );
 };
 
@@ -145,7 +205,7 @@ const customStyles = StyleSheet.create({
         paddingTop:16,
         paddingBottom:16,
 
-        backgroundColor: 'pink',
+        // backgroundColor: 'pink',
     },
 
     resultTxt:{
@@ -170,8 +230,8 @@ const customStyles = StyleSheet.create({
 
     //자격증 즐겨찾기 하러가기 버튼
     btn : {
-        width: '199px',
-        height: '38px',
+        width:199,
+        height: 38,
         backgroundColor: "#FEF0EB",
         borderColor: "#F56C3B",
         borderStyle: 'solid',
@@ -181,11 +241,15 @@ const customStyles = StyleSheet.create({
         paddingTop: 8,
         paddingRight: 20,
         paddingLeft: 20,
+
+        justifyContent:'center',
+        alignItems:'center',
     },
     btnTxt: {
         fontSize: 16,
         fontWeight: "600",
         color: "#F56C3B",
+
     },
 
 
@@ -196,7 +260,7 @@ const customStyles = StyleSheet.create({
         right: 20,
         bottom: 20,
 
-        backgroundColor: 'black',
+
 
 
     },
@@ -253,6 +317,55 @@ const customStyles = StyleSheet.create({
         fontSize: 13,
         fontWeight: "400"
     },
+    cardStar:{
+        position: 'absolute',
+        right:11.5,
+        bottom:12,
+    },
+
+    inputBox: {
+        // flex:1,
+
+        height: 50,
+        width: '100%',
+
+
+        paddingBottom:10,
+        paddingTop:10,
+        paddingLeft:16,
+        paddingRight:12,
+
+        borderWidth: 1,
+        borderRadius:6,
+        borderColor: "#E9E9E9",
+
+        // color: "#8C8C8C",
+        // fontWeight: "400",
+        // fontSize:16,
+
+        alignItems:"center",
+        // justifyContent: "flex-end"
+
+
+    },
+    inputTxt:{
+        color: "#141414",
+        fontWeight: "400",
+        fontSize:16,
+        flex: 9
+    },
+
+
+    listView:{
+        flexDirection:"row",
+        alignItems:"center",
+        padding:20,
+        borderBottomColor: "#E9E9E9",
+        borderTopColor: "#FFFFFF",
+        borderRightColor: "#FFFFFF",
+        borderLeftColor: "#FFFFFF",
+        borderWidth: 1,
+    }
 
 });
 
@@ -262,7 +375,7 @@ const pickerSelectStyles = StyleSheet.create({
         fontWeight: "400",
         color: "#8C8C8C",
         paddingTop:5,
-        backgroundColor: 'pink',
+        // backgroundColor: 'pink',
 
     },
 
@@ -281,7 +394,6 @@ const pickerSelectStyles = StyleSheet.create({
 
 
 const bookmarks:bookmarkType[] = [
-
     {
         id: 0,
         title : '토익(TOEIC)',
@@ -338,6 +450,20 @@ const bookmarks:bookmarkType[] = [
         leftDay: -1,
         isDetail:true,
     },
-
-
 ]
+
+
+
+
+
+const detailInfo = {
+    title: '토익',
+    number: 1299,
+    examDate: '2023년 01월 03일 09:00',
+    regularDate: '2023년 01월 03일 09:00 \n- 2023년 01월 03일 09:00',
+    extraDate: '2023년 01월 03일 09:00 \n- 2023년 01월 03일 09:00',
+    resultDate: '2023년 01월 03일 12:00',
+    institution: '한국생산성본부',
+    homepage: 'https://www.toeic.co.kr',
+    isSelfRegister: false,
+}
